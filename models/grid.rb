@@ -4,7 +4,7 @@ class Grid
 
     x.times do |x_pos|
       y.times do |y_pos|
-        collection << Cell.new(x: x_pos, y: y_pos)
+        collection << Cell.new(x_pos, y_pos)
       end
     end
 
