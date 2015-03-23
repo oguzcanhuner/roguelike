@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+require 'dispel'
+
+# draw app and redraw after each keystroke
+Dispel::Screen.open do |screen|
+  board = <<-BOARD
+  . . . . .
+  . . . . .
+  . . . . .
+  . . . . .
+  BOARD
+  screen.draw board
+
+  Dispel::Keyboard.output do |key|
+    break if key == :"Ctrl+c"
+    screen.draw "Looks like you pressed #{key} (Ctrl+c to quit)"
+  end
+end
