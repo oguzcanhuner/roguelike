@@ -2,9 +2,9 @@ class Grid
   def cells(x: 3, y: 3)
     collection = []
 
-    x.times do |hor|
-      y.times do |ver|
-        collection << 0
+    x.times do |x_pos|
+      y.times do |y_pos|
+        collection << Cell.new(x: x_pos, y: y_pos)
       end
     end
 

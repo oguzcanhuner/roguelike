@@ -91,3 +91,4 @@ RSpec.configure do |config|
 end
 
 require './models/grid'
+require './models/cell'
