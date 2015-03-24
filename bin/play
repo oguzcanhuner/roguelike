@@ -9,6 +9,7 @@ Dispel::Screen.open do |screen|
   screen.draw board
 
   Dispel::Keyboard.output do |key|
+    screen.draw board
     break if key == :"Ctrl+c"
     screen.draw "Looks like you pressed #{key} (Ctrl+c to quit)"
   end
