@@ -1,15 +1,11 @@
 #!/usr/bin/env ruby
 
 require 'dispel'
+require './nethack'
 
 # draw app and redraw after each keystroke
 Dispel::Screen.open do |screen|
-  board = <<-BOARD
-  . . . . .
-  . . . . .
-  . . . . .
-  . . . . .
-  BOARD
+  board = Grid.new(x: 10, y: 10).draw
   screen.draw board
 
   Dispel::Keyboard.output do |key|
