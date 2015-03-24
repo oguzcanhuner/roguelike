@@ -1,15 +1,19 @@
 #!/usr/bin/env ruby
 
 require 'dispel'
+require 'pry'
 require './nethack'
 
 # draw app and redraw after each keystroke
 Dispel::Screen.open do |screen|
-  board = Grid.new(x: 10, y: 10).draw
-  screen.draw board
+  grid = Grid.new(x: 10, y: 10)
+  player = Player.new
+  grid.update_cell(0, 0, player)
+
+  screen.draw grid.draw
 
   Dispel::Keyboard.output do |key|
-    screen.draw board
+    screen.draw grid.draw
     break if key == :"Ctrl+c"
     screen.draw "Looks like you pressed #{key} (Ctrl+c to quit)"
   end

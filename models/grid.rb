@@ -2,7 +2,7 @@ class Grid
   def initialize(x: 10, y: 10)
     @x = x
     @y = y
-    @cells = cells
+    @cells = initialize_cells
   end
 
   attr_reader :x, :y, :cells
@@ -22,8 +22,12 @@ class Grid
     cells[[x, y]]
   end
 
+  def update_cell(x, y, content)
+    @cells[[x, y]].content = content
+  end
+
   private
-  def cells
+  def initialize_cells
     collection = {}
 
     x.times do |x_pos|

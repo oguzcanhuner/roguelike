@@ -10,6 +10,15 @@ describe Grid do
       end
     end
 
+    describe '#update_cell' do
+      it 'updates an existing cell in the grid' do
+        player = double(:player)
+        cell = grid.update_cell(1, 1, player)
+
+        expect(grid.cell(1, 1).content).to eq player
+      end
+    end
+
     describe '#draw' do
       let(:output) { grid.draw }
       it 'returns a graphical representation of the grid' do

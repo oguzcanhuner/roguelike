@@ -6,6 +6,7 @@ class Cell
   end
   
   attr_reader :x, :y, :content
+  attr_accessor :content
 
   def character
     content.character
