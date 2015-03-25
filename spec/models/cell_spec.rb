@@ -10,6 +10,10 @@ describe Cell do
     expect(cell.y).to eq 4
   end
 
+  it 'has coordinates' do
+    expect(cell.coords).to eq [5, 4]
+  end
+
   it 'initializes with an empty cell' do
     expect(cell.content).to be_kind_of EmptyCell
   end

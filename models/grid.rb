@@ -1,16 +1,16 @@
 class Grid
-  def initialize(x: 10, y: 10)
-    @x = x
-    @y = y
+  def initialize(height: 10, width: 10)
+    @height = height
+    @width = width
     @cells = initialize_cells
   end
 
-  attr_reader :x, :y, :cells
+  attr_reader :height, :width, :cells
 
   def draw
     board = ""
-    x.times do |x_pos|
-      y.times do |y_pos|
+    height.times do |x_pos|
+      width.times do |y_pos|
         board << cell(x_pos, y_pos).character
       end
       board << "\n"
@@ -22,16 +22,22 @@ class Grid
     cells[[x, y]]
   end
 
-  def update_cell(x, y, content)
-    @cells[[x, y]].content = content
+  def populate_cell(x, y, content)
+    cell = @cells[[x, y]]
+    cell.content = content
+    content.cell = cell
+  end
+
+  def empty_cell(x, y)
+    @cells[[x, y]].content = EmptyCell.new
   end
 
   private
   def initialize_cells
     collection = {}
 
-    x.times do |x_pos|
-      y.times do |y_pos|
+    height.times do |x_pos|
+      width.times do |y_pos|
         collection[[x_pos, y_pos]] = Cell.new(x_pos, y_pos)
       end
     end

@@ -11,6 +11,10 @@ class Cell
   def character
     content.character
   end
+
+  def coords
+    [x, y]
+  end
 end
 
 class EmptyCell
@@ -21,10 +25,3 @@ class EmptyCell
   attr_reader :character
 end
 
-class Player
-  def initialize
-    @character = " @ "
-  end
-
-  attr_reader :character
-end

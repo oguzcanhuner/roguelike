@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe Grid do
   context 'given a 5 by 5 grid' do
-    let(:grid) {Grid.new(x: 5, y: 5)}
+    let(:grid) {Grid.new(height: 5, width: 5)}
+    let(:empty_cell) { EmptyCell.new }
 
     describe '#cell' do
       it 'grants access to cells through coordinates' do
@@ -10,12 +11,21 @@ describe Grid do
       end
     end
 
-    describe '#update_cell' do
+    describe '#populate_cell' do
       it 'updates an existing cell in the grid' do
-        player = double(:player)
-        cell = grid.update_cell(1, 1, player)
+        player = Player.new
+        cell = grid.populate_cell(1, 1, player)
 
         expect(grid.cell(1, 1).content).to eq player
+        expect(player.cell).to eq cell
+      end
+    end
+
+    describe '#empty_cell' do
+      it 'adds an empty cell to the coordinates given' do
+        cell = grid.empty_cell(1, 1)
+
+        expect(grid.cell(1, 1).content).to be_kind_of EmptyCell
       end
     end
 
