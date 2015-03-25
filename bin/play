@@ -5,9 +5,9 @@ require 'pry'
 require './nethack'
 
 # draw app and redraw after each keystroke
-grid = Grid.new(height: 10, width: 10)
+grid = Grid.new(height: 100, width: 100)
 player = Player.new
-grid.populate_cell(0, 0, player)
+grid.populate_cell(5, 0, player)
 player_mover = Mover.new(grid, player)
 
 
@@ -16,7 +16,10 @@ Dispel::Screen.open do |screen|
   screen.draw grid.draw
 
   Dispel::Keyboard.output do |key|
-    player_mover.move(:left) if key == :h
+    player_mover.move(:left) if key == 'h'
+    player_mover.move(:up) if key == 'k'
+    player_mover.move(:down) if key == 'j'
+    player_mover.move(:right) if key == 'l'
     break if key == :"Ctrl+c"
     screen.draw grid.draw
   end

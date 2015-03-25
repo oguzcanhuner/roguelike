@@ -9,8 +9,8 @@ class Grid
 
   def draw
     board = ""
-    height.times do |x_pos|
-      width.times do |y_pos|
+    height.times do |y_pos|
+      width.times do |x_pos|
         board << cell(x_pos, y_pos).character
       end
       board << "\n"
@@ -19,7 +19,7 @@ class Grid
   end
 
   def cell(x, y)
-    cells[[x, y]]
+    @cells[[x, y]]
   end
 
   def populate_cell(x, y, content)
@@ -36,8 +36,8 @@ class Grid
   def initialize_cells
     collection = {}
 
-    height.times do |x_pos|
-      width.times do |y_pos|
+    height.times do |y_pos|
+      width.times do |x_pos|
         collection[[x_pos, y_pos]] = Cell.new(x_pos, y_pos)
       end
     end

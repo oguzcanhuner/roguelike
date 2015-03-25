@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Grid do
   context 'given a 5 by 5 grid' do
-    let(:grid) {Grid.new(height: 5, width: 5)}
+    let(:grid) {Grid.new(height: 5, width: 6)}
     let(:empty_cell) { EmptyCell.new }
 
     describe '#cell' do
@@ -14,9 +14,9 @@ describe Grid do
     describe '#populate_cell' do
       it 'updates an existing cell in the grid' do
         player = Player.new
-        cell = grid.populate_cell(1, 1, player)
+        cell = grid.populate_cell(1, 3, player)
 
-        expect(grid.cell(1, 1).content).to eq player
+        expect(grid.cell(1, 3).content).to eq player
         expect(player.cell).to eq cell
       end
     end
@@ -33,11 +33,11 @@ describe Grid do
       let(:output) { grid.draw }
       it 'returns a graphical representation of the grid' do
         expected = <<-BOARD
- .  .  .  .  . 
- .  .  .  .  . 
- .  .  .  .  . 
- .  .  .  .  . 
- .  .  .  .  . 
+ .  .  .  .  .  . 
+ .  .  .  .  .  . 
+ .  .  .  .  .  . 
+ .  .  .  .  .  . 
+ .  .  .  .  .  . 
         BOARD
 
         expect(output).to eq expected
