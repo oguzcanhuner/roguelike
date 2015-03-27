@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Mover do
   let(:grid) { Grid.new(height: 10, width: 10) }
-  let(:player) { Player.new }
+  let(:player) { CellContent::Player.new }
   let(:mover) { Mover.new(grid, player) }
 
 

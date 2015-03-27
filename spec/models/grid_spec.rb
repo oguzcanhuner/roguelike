@@ -13,7 +13,7 @@ describe Grid do
 
     describe '#populate_cell' do
       it 'updates an existing cell in the grid' do
-        player = Player.new
+        player = CellContent::Player.new
         cell = grid.populate_cell(1, 3, player)
 
         expect(grid.cell(1, 3).content).to eq player

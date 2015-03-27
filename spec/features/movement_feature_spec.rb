@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Cell to cell movement' do
   let(:grid) { Grid.new(height: 5, width: 6) }
-  let(:player) { Player.new }
+  let(:player) { CellContent::Player.new }
   let(:mover) { Mover.new(grid, player) }
   before { grid.populate_cell(1, 1, player) }
 

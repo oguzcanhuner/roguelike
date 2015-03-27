@@ -6,7 +6,7 @@ require './nethack'
 
 # draw app and redraw after each keystroke
 grid = Grid.new(height: 10, width: 10)
-player = Player.new
+player = CellContent::Player.new
 grid.populate_cell(5, 0, player)
 player_mover = Mover.new(grid, player)
 
