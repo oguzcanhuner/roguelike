@@ -1,15 +1,15 @@
 class Mover
-  def initialize(grid, moveable)
-    @grid = grid
+  def initialize(map, moveable)
+    @map = map
     @moveable = moveable
   end
 
   def move(direction)
     current_coords = @moveable.coords
     new_coords = calculate_new_coords(current_coords, direction)
-    if @grid.cell(*new_coords)
-      @grid.populate_cell(*new_coords, @moveable)
-      @grid.empty_cell(*current_coords)
+    if @map.cell(*new_coords)
+      @map.populate_cell(*new_coords, @moveable)
+      @map.empty_cell(*current_coords)
     end
   end
 

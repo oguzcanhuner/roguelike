@@ -1,4 +1,4 @@
-class Grid
+class Map
   def initialize(height: 10, width: 10)
     @height = height
     @width = width
