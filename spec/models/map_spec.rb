@@ -4,6 +4,7 @@ describe Map do
   context 'given a 5 by 5 map' do
     let(:map) {Map.new(height: 5, width: 6)}
     let(:empty_cell) { EmptyCell.new }
+    let(:player) { CellContent::Player.new }
 
     describe '#cell' do
       it 'grants access to cells through coordinates' do
@@ -13,7 +14,6 @@ describe Map do
 
     describe '#populate_cell' do
       it 'updates an existing cell in the map' do
-        player = CellContent::Player.new
         cell = map.populate_cell(1, 3, player)
 
         expect(map.cell(1, 3).content).to eq player
@@ -29,18 +29,14 @@ describe Map do
       end
     end
 
-    describe '#draw' do
-      let(:output) { map.draw }
-      it 'returns a graphical representation of the map' do
-        expected = <<-BOARD
- .  .  .  .  .  . 
- .  .  .  .  .  . 
- .  .  .  .  .  . 
- .  .  .  .  .  . 
- .  .  .  .  .  . 
-        BOARD
+    describe '#move_object' do
 
-        expect(output).to eq expected
+      it 'moves a cell content from one coordinate to another' do
+        map.populate_cell(1, 1, player)
+
+        expect{map.move_object(from: [1,1], to: [1,0])}.to change{
+          map.cell(1,1).content
+        }
       end
     end
   end

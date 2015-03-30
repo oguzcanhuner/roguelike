@@ -7,17 +7,6 @@ class Map
 
   attr_reader :height, :width, :cells
 
-  def draw
-    board = ""
-    height.times do |y_pos|
-      width.times do |x_pos|
-        board << cell(x_pos, y_pos).character
-      end
-      board << "\n"
-    end
-    board
-  end
-
   def cell(x, y)
     @cells[[x, y]]
   end
@@ -30,6 +19,12 @@ class Map
 
   def empty_cell(x, y)
     @cells[[x, y]].content = EmptyCell.new
+  end
+
+  def move_object(from:, to:)
+    object = cell(*from).content
+    populate_cell(*to, object)
+    empty_cell(*from)
   end
 
   private
