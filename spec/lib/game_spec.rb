@@ -4,20 +4,20 @@ describe Game do
   let(:game) { Game.new }
 
   describe '#setup' do
-
-    let!(:map) { game.setup }
-    it 'creates a map' do
-      expect(map).to be_kind_of Map
+    it 'returns instances of a map and a player' do
+      expect(game.setup.keys).to eq [:map, :player]
     end
 
     it 'adds a player to the map' do
+      map = game.setup.fetch(:map)
       expect(map.cells.find{ |i, c| c.content.class == CellContent::Player }).to be_truthy
     end
+
   end
 
   describe "#step" do
     context 'player movement' do
-      let!(:map) { game.setup }
+      let!(:map) { game.setup.fetch(:map) }
 
       it 'moves the player one step to the left' do
         initial_position = map.cells.find{ |i, c| c.content.class == CellContent::Player }[1].coords

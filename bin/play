@@ -6,7 +6,9 @@ require './nethack'
 
 # draw app and redraw after each keystroke
 game = Game.new
-ui = UiHelper.new(map: game.setup)
+environment = game.setup
+map, player = environment.fetch(:map), environment.fetch(:player)
+ui = UiHelper.new(map: map, player: player)
 
 Dispel::Screen.open do |screen|
 

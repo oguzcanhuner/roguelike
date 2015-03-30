@@ -1,9 +1,9 @@
 class Game
 
   def setup
-    @map = Map.new(height: 10, width: 10)
+    @map = Map.new(height: 100, width: 100)
     @player = initialize_player
-    @map
+    { map: @map, player: @player }
   end
 
   def step(key)

@@ -22,11 +22,11 @@ describe Cell do
     Cell.new(5, 5, content: double(:player_cell))
   end
 
-  describe '#character' do
+  describe '#to_s' do
     let(:empty_cell) { Cell.new(1,1, content: EmptyCell.new) }
 
     it 'returns the character representation of the cell contents' do
-      expect(empty_cell.character).to eq " . "
+      expect(empty_cell.to_s).to eq " . "
     end
   end
 end

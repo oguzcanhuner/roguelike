@@ -8,8 +8,8 @@ class Cell
   attr_reader :x, :y, :content
   attr_accessor :content
 
-  def character
-    content.character
+  def to_s
+    content.to_s
   end
 
   def coords
@@ -22,10 +22,13 @@ class EmptyCell
     @character = " . "
   end
 
-  attr_reader :character
-
   def to_s
     @character
   end
 end
 
+class NullCell
+  def to_s
+    ""
+  end
+end
