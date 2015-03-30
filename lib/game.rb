@@ -3,6 +3,7 @@ class Game
   def setup
     @map = Map.new(height: 100, width: 100)
     @player = initialize_player
+    initialize_npcs
     { map: @map, player: @player }
   end
 
@@ -19,6 +20,11 @@ class Game
     'k' => [:move_player, :up],
     'l' => [:move_player, :right],
   }
+  end
+
+  def initialize_npcs
+    npc = NPC.new
+    @map.populate_cell(8, 6, npc)
   end
 
   def initialize_player
