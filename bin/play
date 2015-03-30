@@ -6,13 +6,15 @@ require './nethack'
 
 # draw app and redraw after each keystroke
 game = Game.new
+ui = UiHelper.new(map: game.setup)
 
 Dispel::Screen.open do |screen|
 
-  screen.draw game.setup
+  screen.draw ui.draw
 
   Dispel::Keyboard.output do |key|
     break if key == :"Ctrl+c"
-    screen.draw game.step(key)
+    game.step(key)
+    screen.draw ui.draw
   end
 end

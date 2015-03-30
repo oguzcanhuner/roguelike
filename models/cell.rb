@@ -23,5 +23,9 @@ class EmptyCell
   end
 
   attr_reader :character
+
+  def to_s
+    @character
+  end
 end
 
