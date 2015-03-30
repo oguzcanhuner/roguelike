@@ -30,13 +30,22 @@ describe Map do
     end
 
     describe '#move_object' do
+      before do
+        map.populate_cell(1, 1, player)
+      end
 
       it 'moves a cell content from one coordinate to another' do
-        map.populate_cell(1, 1, player)
-
         expect{map.move_object(from: [1,1], to: [1,0])}.to change{
           map.cell(1,1).content
         }
+      end
+
+      context 'when the destination cell doesnt exist' do
+        it 'doesnt move' do
+          expect{map.move_object(from: [1,1], to: [-1,0])}.not_to change{
+            map.cell(1,1).content
+          }
+        end
       end
     end
   end

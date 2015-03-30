@@ -8,7 +8,7 @@ class Map
   attr_reader :height, :width, :cells
 
   def cell(x, y)
-    @cells[[x, y]]
+    @cells[[x, y]] || NullCell.new
   end
 
   def populate_cell(x, y, content)
@@ -22,9 +22,11 @@ class Map
   end
 
   def move_object(from:, to:)
-    object = cell(*from).content
-    populate_cell(*to, object)
-    empty_cell(*from)
+    if cell(*to).passable?
+      object = cell(*from).content
+      populate_cell(*to, object)
+      empty_cell(*from)
+    end
   end
 
   private
