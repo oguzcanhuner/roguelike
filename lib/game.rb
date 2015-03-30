@@ -1,4 +1,5 @@
 class Game
+
   def setup
     @map = Map.new(height: 10, width: 10)
     @player = initialize_player
@@ -6,20 +7,30 @@ class Game
   end
 
   def step(key)
-    move_player(key)
+    send(*keys[key])
     @map
   end
 
   private
+  def keys
+  {
+    'h' => [:move_player, :left],
+    'j' => [:move_player, :down],
+    'k' => [:move_player, :up],
+    'l' => [:move_player, :right],
+  }
+  end
+
   def initialize_player
     player = CellContent::Player.new
     @map.populate_cell(5, 5, player)
     player
   end
 
-  def move_player(key)
+  def move_player(direction)
     movement = MovementHelper.calculate_movement(current_coordinates: @player.coords, 
-                                                 direction: key)
+                                                 direction: direction)
     @map.move_object(from: movement[:from], to: movement[:to])
   end
+
 end

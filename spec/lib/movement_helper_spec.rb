@@ -6,7 +6,7 @@ describe MovementHelper do
       it 'returns a begining and ending set of coordinates for a movement' do
         expect( 
            MovementHelper.calculate_movement(current_coordinates: [0, 0], 
-                                             direction: 'l')
+                                             direction: :right)
         ).to eq(
           {from: [0, 0], to: [1, 0] }
         )
@@ -16,7 +16,7 @@ describe MovementHelper do
       it 'returns a begining and ending set of coordinates for a movement' do
         expect( 
            MovementHelper.calculate_movement(current_coordinates: [0, 0], 
-                                             direction: 'h')
+                                             direction: :left)
         ).to eq(
           {from: [0, 0], to: [-1, 0] }
         )
@@ -26,7 +26,7 @@ describe MovementHelper do
       it 'returns a begining and ending set of coordinates for a movement' do
         expect( 
            MovementHelper.calculate_movement(current_coordinates: [0, 0], 
-                                             direction: 'k')
+                                             direction: :up)
         ).to eq(
           {from: [0, 0], to: [0, -1] }
         )
@@ -36,7 +36,7 @@ describe MovementHelper do
       it 'returns a begining and ending set of coordinates for a movement' do
         expect( 
            MovementHelper.calculate_movement(current_coordinates: [0, 0], 
-                                             direction: 'j')
+                                             direction: :down)
         ).to eq(
           {from: [0, 0], to: [0, 1] }
         )

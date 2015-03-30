@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe Game do
   let(:game) { Game.new }
-  let!(:map) { game.setup }
 
   describe '#setup' do
 
+    let!(:map) { game.setup }
     it 'creates a map' do
       expect(map).to be_kind_of Map
     end
@@ -17,6 +17,8 @@ describe Game do
 
   describe "#step" do
     context 'player movement' do
+      let!(:map) { game.setup }
+
       it 'moves the player one step to the left' do
         initial_position = map.cells.find{ |i, c| c.content.class == CellContent::Player }[1].coords
         new_map = game.step('h')

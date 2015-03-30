@@ -1,17 +1,9 @@
 #returns coordinates to help with movement
 class MovementHelper
-  DIRECTIONS = {
-    h: :left,
-    k: :up,
-    j: :down,
-    l: :right,
-  }
-
   def self.calculate_movement(current_coordinates:, 
                               direction:, 
                               steps: 1)
     coordinates = { from: current_coordinates }
-    direction = DIRECTIONS[direction.to_sym]
     x, y = current_coordinates
 
     coordinates[:to] = [x, y] if direction.nil?
