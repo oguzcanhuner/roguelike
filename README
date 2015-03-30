@@ -1,0 +1,5 @@
+todo:
+-  Create a UI class to handle ui
+-  Only show 8 grids around the player while the player moves
+-  Add an NPC
+-  Add a wall
