@@ -22,7 +22,7 @@ class Game
   end
 
   def initialize_player
-    player = CellContent::Player.new
+    player = Player.new
     @map.populate_cell(5, 5, player)
     player
   end

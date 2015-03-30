@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe CellContent::Player do
+describe Player do
   let(:cell) { Cell.new(1, 5) }
-  let(:player) { CellContent::Player.new }
+  let(:player) { Player.new }
 
   context 'given a valid cell' do
     it 'has coordinates corresponding to the parent cell' do
