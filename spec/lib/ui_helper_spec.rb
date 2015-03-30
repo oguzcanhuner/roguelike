@@ -5,10 +5,6 @@ describe UiHelper do
     UiHelper.new(map: double(:map))
   end
 
-  it 'requires a map' do
-    UiHelper.new
-  end
-
   describe '#draw' do
     let(:map) { Map.new(height: 3, width: 3) }
     let(:helper) { UiHelper.new(map: map) }
