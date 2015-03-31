@@ -14,8 +14,15 @@ describe UiHelper do
       let(:map) { environment.fetch(:map) }
 
       let!(:helper) { UiHelper.new(map: map, player: player) }
+      
+      before do
+        # make the screener smaller so that map illustrations don't take up too much space in tests
+        UiHelper.const_set(:WINDOW_HEIGHT, 4)
+        UiHelper.const_set(:WINDOW_WIDTH, 4)
+      end
 
       it 'outputs the area around the player' do
+
         expect(helper.draw).to eq(
 <<BOARD
  .  .  .  .  . 

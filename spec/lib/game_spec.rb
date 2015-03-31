@@ -17,15 +17,14 @@ describe Game do
 
   describe "#step" do
     context 'player movement' do
-      let!(:map) { game.setup.fetch(:map) }
+      let(:environment) { game.setup }
+      let(:map) { environment.fetch(:map) }
+      let(:player) { environment.fetch(:player) }
 
       it 'moves the player one step to the left' do
-        initial_position =  map.cells.find{ |i, c| c.content.class == Player }[1].coords 
-        new_map = game.step('h')
-
-        expect( new_map.cell(*initial_position).content ).to be_kind_of EmptyCell
-        new_position = [initial_position[0] - 1, initial_position[1]]
-        expect( new_map.cell(*new_position).content).to be_kind_of Player
+        expect{ game.step('h') }.to change{
+          player.coords
+        }
       end
 
       it 'moves the player one step to the right' do

@@ -17,7 +17,7 @@ class Cell
   end
 
   def passable?
-    true
+    !content.solid?
   end
 end
 
@@ -28,6 +28,10 @@ class EmptyCell
 
   def to_s
     @character
+  end
+
+  def solid?
+    false
   end
 end
 
