@@ -41,11 +41,11 @@ BOARD
           end
           expect(helper.draw).to eq(
 <<BOARD
- .  .  . 
- .  .  . 
- @  .  . 
- .  .  . 
- .  .  . 
+ .  .  .  .  . 
+ .  .  .  .  . 
+ @  .  .  .  . 
+ .  .  .  .  . 
+ .  .  .  .  . 
 BOARD
           )
         end
