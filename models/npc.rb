@@ -1,6 +1,7 @@
 class NPC
-  def initialize
+  def initialize(movement_helper:)
     @character = " D "
+    @movement_helper = movement_helper
   end
 
   attr_accessor :cell
@@ -15,5 +16,9 @@ class NPC
 
   def solid?
     true
+  end
+
+  def move(direction)
+    @movement_helper.move(self, direction)
   end
 end
