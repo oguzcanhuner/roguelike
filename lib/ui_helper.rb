@@ -1,4 +1,7 @@
 class UiHelper
+  WINDOW_HEIGHT = 10
+  WINDOW_WIDTH = 12
+
   def initialize(map:, player:)
     @map = map
     @player = player
@@ -22,12 +25,11 @@ class UiHelper
 
   def area_around_player
     x, y = @player.coords
-    vision = 2
     {
-      x_lower_boundary: x - vision,
-      x_upper_boundary: x + vision,
-      y_lower_boundary: y - vision,
-      y_upper_boundary: y + vision
+      x_lower_boundary: x - WINDOW_WIDTH/2,
+      x_upper_boundary: x + WINDOW_WIDTH/2,
+      y_lower_boundary: y - WINDOW_HEIGHT/2,
+      y_upper_boundary: y + WINDOW_HEIGHT/2
     }
   end
 end
