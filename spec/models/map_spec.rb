@@ -4,7 +4,8 @@ describe Map do
   context 'given a 5 by 5 map' do
     let(:map) {Map.new(height: 5, width: 6)}
     let(:empty_cell) { EmptyCell.new }
-    let(:player) { Player.new }
+    let(:movement_helper) { MovementHelper.new(map: map) }
+    let(:player) { Player.new(movement_helper: movement_helper) }
 
     describe '#cell' do
       it 'grants access to cells through coordinates' do

@@ -1,45 +1,30 @@
 require 'spec_helper'
 
 describe MovementHelper do
-  describe '.calculate_movement' do
-    context 'when moving right' do
-      it 'returns a begining and ending set of coordinates for a movement' do
-        expect( 
-           MovementHelper.calculate_movement(current_coordinates: [0, 0], 
-                                             direction: :right)
-        ).to eq(
-          {from: [0, 0], to: [1, 0] }
-        )
+  let(:map) { double(:map) }
+  let(:helper) { MovementHelper.new(map: map) }
+  let(:moveable) { double(:moveable, coords: [1, 1]) }
+
+  describe '#move' do
+    context 'given a moveable object' do
+      it 'moves the given object to the left' do
+        expect(map).to receive(:move_object).with(from: [1, 1], to: [0, 1])
+        helper.move(moveable, direction: :left)
       end
-    end
-    context 'when moving left' do
-      it 'returns a begining and ending set of coordinates for a movement' do
-        expect( 
-           MovementHelper.calculate_movement(current_coordinates: [0, 0], 
-                                             direction: :left)
-        ).to eq(
-          {from: [0, 0], to: [-1, 0] }
-        )
+
+      it 'moves the given object to the right' do
+        expect(map).to receive(:move_object).with(from: [1, 1], to: [2, 1])
+        helper.move(moveable, direction: :right)
       end
-    end
-    context 'when moving up' do
-      it 'returns a begining and ending set of coordinates for a movement' do
-        expect( 
-           MovementHelper.calculate_movement(current_coordinates: [0, 0], 
-                                             direction: :up)
-        ).to eq(
-          {from: [0, 0], to: [0, -1] }
-        )
+
+      it 'moves the given object to the right' do
+        expect(map).to receive(:move_object).with(from: [1, 1], to: [1, 0])
+        helper.move(moveable, direction: :up)
       end
-    end
-    context 'when moving down' do
-      it 'returns a begining and ending set of coordinates for a movement' do
-        expect( 
-           MovementHelper.calculate_movement(current_coordinates: [0, 0], 
-                                             direction: :down)
-        ).to eq(
-          {from: [0, 0], to: [0, 1] }
-        )
+
+      it 'moves the given object to the right' do
+        expect(map).to receive(:move_object).with(from: [1, 1], to: [1, 2])
+        helper.move(moveable, direction: :down)
       end
     end
   end

@@ -2,6 +2,7 @@ class Game
 
   def setup
     @map = Map.new(height: 100, width: 100)
+    @movement_helper = MovementHelper.new(map: @map)
     @player = initialize_player
     initialize_npcs
     { map: @map, player: @player }
@@ -28,15 +29,13 @@ class Game
   end
 
   def initialize_player
-    player = Player.new
+    player = Player.new(movement_helper: @movement_helper)
     @map.populate_cell(5, 5, player)
     player
   end
 
   def move_player(direction)
-    movement = MovementHelper.calculate_movement(current_coordinates: @player.coords, 
-                                                 direction: direction)
-    @map.move_object(from: movement[:from], to: movement[:to])
+    @player.move(direction: direction)
   end
 
 end

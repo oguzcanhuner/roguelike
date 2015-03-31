@@ -1,8 +1,18 @@
 #returns coordinates to help with movement
 class MovementHelper
-  def self.calculate_movement(current_coordinates:, 
-                              direction:, 
-                              steps: 1)
+
+  def initialize(map:)
+    @map = map
+  end
+
+  def move(moveable, direction:)
+    coordinates = calculate_movement(current_coordinates: moveable.coords, direction: direction)
+    @map.move_object(from: coordinates.fetch(:from), to: coordinates.fetch(:to) )
+  end
+
+  private
+  def calculate_movement(current_coordinates:, 
+                         direction:)
     coordinates = { from: current_coordinates }
     x, y = current_coordinates
 
