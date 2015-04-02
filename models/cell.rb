@@ -35,6 +35,20 @@ class EmptyCell
   end
 end
 
+class Wall
+  def initialize
+    @character = " # "
+  end
+
+  def to_s
+    @character
+  end
+
+  def solid?
+    true
+  end
+end
+
 class NullCell
   def passable?
     false

@@ -21,6 +21,17 @@ class UiHelper
     output
   end
 
+  def draw_whole_map
+    output = ""
+    (WINDOW_HEIGHT).times do |y|
+      (WINDOW_WIDTH).times do |x|
+        output << @map.cell(x, y).to_s
+      end
+      output << "\n"
+    end 
+    output
+  end
+
   private
 
   def area_around_player

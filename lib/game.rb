@@ -3,6 +3,7 @@ class Game
   def setup
     @map = Map.new(height: 100, width: 100)
     @movement_helper = MovementHelper.new(map: @map)
+    @map_generator = MapGenerator.new(map: @map)
     @player = initialize_player
     @npcs = initialize_npcs
     { map: @map, player: @player }

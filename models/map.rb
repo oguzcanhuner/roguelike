@@ -21,6 +21,10 @@ class Map
     @cells[[x, y]].content = EmptyCell.new
   end
 
+  def wall_cell(x, y)
+    @cells[[x, y]].content = Wall.new
+  end
+
   def move_object(from:, to:)
     if cell(*to).passable?
       object = cell(*from).content
