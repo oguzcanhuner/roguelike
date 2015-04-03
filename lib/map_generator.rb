@@ -1,4 +1,5 @@
 class MapGenerator
+  PERCENTAGE_OF_WALLS = 0.35
   def initialize(map: map)
     @map = map
   end
@@ -18,7 +19,7 @@ class MapGenerator
         @map.wall_cell(*coords)
       elsif coordinate_is_in_the_middle(*coords)
         @map.empty_cell(*coords)
-      elsif rand <= 0.35
+      elsif rand <= PERCENTAGE_OF_WALLS
         @map.wall_cell(*coords)
       end
     end
@@ -26,7 +27,7 @@ class MapGenerator
 
   def coordinate_is_in_the_middle(x, y)
     middle = (@map.width / 2).round
-    y == middle
+    x == middle
   end
 
   def coordinate_is_an_edge(x, y)
@@ -55,6 +56,7 @@ class MapGenerator
   #   - otherwise, it stays empty
   # if a walled cell has 5 or more walls around it, it becomes a wall
   #   - otherwise, it becomes empty
+  # if a cell is an edge, it becomes a wall
   # http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels
   def apply_4_5_method
     @map.cells.each do |coords, cell|

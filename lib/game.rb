@@ -1,13 +1,12 @@
 class Game
-
+  def initialize(map:)
+    @map = map
+  end
   def setup
-    @map = Map.new(height: 100, width: 100)
     @movement_helper = MovementHelper.new(map: @map)
-    @map_generator = MapGenerator.new(map: @map)
-    @map_generator.generate_cave
     @player = initialize_player
     @npcs = initialize_npcs
-    { map: @map, player: @player }
+    { player: @player }
   end
 
   def step(key)

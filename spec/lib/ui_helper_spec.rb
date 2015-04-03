@@ -6,49 +6,20 @@ describe UiHelper do
   end
 
   describe '#draw' do
-
     describe 'returning a string representation of the map' do
-      let(:game) { Game.new }
+      let(:map) { Map.new }
+      let(:game) { Game.new(map: map) }
       let(:environment) { game.setup }
       let(:player) { environment.fetch(:player) }
-      let(:map) { environment.fetch(:map) }
 
       let!(:helper) { UiHelper.new(map: map, player: player) }
       
-      before do
-        # make the screener smaller so that map illustrations don't take up too much space in tests
-        UiHelper.const_set(:WINDOW_HEIGHT, 4)
-        UiHelper.const_set(:WINDOW_WIDTH, 4)
+      it 'outputs a map as a string' do
+        expect(helper.draw).to be_a String
       end
 
-      it 'outputs the area around the player' do
-
-        expect(helper.draw).to eq(
-<<BOARD
- .  .  .  .  . 
- .  .  .  .  . 
- .  .  @  .  . 
- .  .  .  .  . 
- .  .  .  .  . 
-BOARD
-        )
-      end
-
-      context 'when the player is near the edge' do
-        it 'outputs the area around the player' do
-          5.times do
-            game.step('h')
-          end
-          expect(helper.draw).to eq(
-<<BOARD
- .  .  .  .  . 
- .  .  .  .  . 
- @  .  .  .  . 
- .  .  .  .  . 
- .  .  .  .  . 
-BOARD
-          )
-        end
+      it 'outputs the player' do
+        expect(helper.draw).to include "@"
       end
     end
   end

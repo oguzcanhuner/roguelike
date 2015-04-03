@@ -4,10 +4,16 @@ require 'dispel'
 require 'pry'
 require './nethack'
 
-# draw app and redraw after each keystroke
-game = Game.new
+# set up the map
+map = Map.new(height: 30, width: 40)
+map_generator = MapGenerator.new(map: map)
+map_generator.generate_cave
+
+# set up the game mechanics
+game = Game.new(map: map)
 environment = game.setup
-map, player = environment.fetch(:map), environment.fetch(:player)
+player = environment.fetch(:player)
+
 ui = UiHelper.new(map: map, player: player)
 
 Dispel::Screen.open do |screen|
