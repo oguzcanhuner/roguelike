@@ -17,6 +17,15 @@ class Map
     content.cell = cell
   end
 
+  def populate_random_empty_cell(content)
+    empty_cells = @cells.collect do |coords, cell|
+      cell if cell.empty? 
+    end.compact
+
+    x, y = empty_cells.sample.coords
+    populate_cell(x, y, content)
+  end
+
   def empty_cell(x, y)
     @cells[[x, y]].content = EmptyCell.new
   end

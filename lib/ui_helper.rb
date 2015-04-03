@@ -23,8 +23,8 @@ class UiHelper
 
   def draw_whole_map
     output = ""
-    (WINDOW_HEIGHT).times do |y|
-      (WINDOW_WIDTH).times do |x|
+    @map.height.times do |y|
+      @map.width.times do |x|
         output << @map.cell(x, y).to_s
       end
       output << "\n"

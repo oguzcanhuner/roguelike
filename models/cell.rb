@@ -19,6 +19,14 @@ class Cell
   def passable?
     !content.solid?
   end
+
+  def wall?
+    content.class == Wall
+  end
+
+  def empty?
+    content.class == EmptyCell
+  end
 end
 
 class EmptyCell
@@ -56,5 +64,9 @@ class NullCell
 
   def to_s
     ""
+  end
+
+  def wall?
+    true
   end
 end

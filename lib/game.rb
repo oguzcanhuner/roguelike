@@ -4,6 +4,7 @@ class Game
     @map = Map.new(height: 100, width: 100)
     @movement_helper = MovementHelper.new(map: @map)
     @map_generator = MapGenerator.new(map: @map)
+    @map_generator.generate_cave
     @player = initialize_player
     @npcs = initialize_npcs
     { map: @map, player: @player }
@@ -29,18 +30,18 @@ class Game
   end
 
   def initialize_npcs
-    npc1 = NPC.new(movement_helper: @movement_helper)
-    npc2 = NPC.new(movement_helper: @movement_helper)
-    npc3 = NPC.new(movement_helper: @movement_helper)
-    @map.populate_cell(8, 6, npc1)
-    @map.populate_cell(3, 1, npc2)
-    @map.populate_cell(10, 5, npc3)
-    [npc1, npc2, npc3]
+    npcs = []
+    10.times do
+      npc = NPC.new(movement_helper: @movement_helper)
+      @map.populate_random_empty_cell(npc)
+      npcs << npc
+    end
+    npcs
   end
 
   def initialize_player
     player = Player.new(movement_helper: @movement_helper)
-    @map.populate_cell(5, 5, player)
+    @map.populate_random_empty_cell(player)
     player
   end
 
