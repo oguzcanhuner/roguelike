@@ -9,6 +9,7 @@ GEM
     dispel (0.0.7)
       curses
     docile (1.1.5)
+    dotenv (1.0.2)
     method_source (0.8.2)
     multi_json (1.11.0)
     pry (0.10.1)
@@ -41,5 +42,6 @@ PLATFORMS
 DEPENDENCIES
   codeclimate-test-reporter
   dispel
+  dotenv
   pry
   rspec
