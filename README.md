@@ -11,6 +11,16 @@ From wikipedia:
 In the root directory:
 - `ruby bin/play`
 
+## What's supported?
+Currently you can only move the player around a single randomly generated map. The map includes some NPCs who move around randomly.
+
+Movement:
+ - Left: h
+ - Up: j
+ - Down: k
+ - Right: l
+ 
+
 ## Testing
 
 Tests are written using rspec and all tests are within the spec folder. To run:
