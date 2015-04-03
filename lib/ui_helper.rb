@@ -1,6 +1,6 @@
 class UiHelper
-  WINDOW_HEIGHT = 10
-  WINDOW_WIDTH = 12
+  WINDOW_HEIGHT = 15
+  WINDOW_WIDTH = 20
 
   def initialize(map:, player:)
     @map = map
@@ -21,6 +21,7 @@ class UiHelper
     output
   end
 
+  # for testing
   def draw_whole_map
     output = ""
     @map.height.times do |y|
@@ -51,7 +52,7 @@ class UiHelper
       boundaries[:x_lower_boundary] = 0
     end
 
-    if boundaries[:x_upper_boundary] >= @map.width
+    if boundaries[:x_upper_boundary] > @map.width
       boundaries[:x_lower_boundary] -= (boundaries[:x_upper_boundary] - @map.width)
       boundaries[:x_upper_boundary] = @map.width
     end
