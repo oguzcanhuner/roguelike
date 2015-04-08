@@ -19,7 +19,7 @@
 require "codeclimate-test-reporter"
 require 'dotenv'
 Dotenv.load
-CodeClimate::TestReporter.start
+#CodeClimate::TestReporter.start
 
 require './nethack'
 require 'pry'

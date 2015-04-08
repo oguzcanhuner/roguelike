@@ -2,6 +2,7 @@ class Game
   def initialize(map:)
     @map = map
   end
+
   def setup
     @movement_helper = MovementHelper.new(map: @map)
     @player = initialize_player
@@ -31,7 +32,7 @@ class Game
   def initialize_npcs
     npcs = []
     10.times do
-      npc = NPC.new(movement_helper: @movement_helper)
+      npc = NPC.new(interactive_entity)
       @map.populate_random_empty_cell(npc)
       npcs << npc
     end
@@ -39,7 +40,7 @@ class Game
   end
 
   def initialize_player
-    player = Player.new(movement_helper: @movement_helper)
+    player = Player.new(interactive_entity)
     @map.populate_random_empty_cell(player)
     player
   end
@@ -52,6 +53,10 @@ class Game
     @npcs.each do |npc|
       npc.move(direction: [:left, :right, :up, :down].sample)
     end
+  end
+
+  def interactive_entity
+    InteractiveEntity.new(movement_helper: @movement_helper)
   end
 
 end

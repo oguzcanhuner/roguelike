@@ -1,17 +1,12 @@
 require 'spec_helper'
 
 describe NPC do
-  let(:npc) { NPC.new(movement_helper: double(:movement_helper)) }
-  let(:cell) { Cell.new(0,0) }
+  let(:entity) { InteractiveEntity.new(movement_helper: double(:movement_helper)) }
+  let(:npc) { NPC.new(entity) }
 
-  it 'has a character' do
-    expect(npc.to_s).to eq " D "
-  end
-
-  describe '#coords' do
-    it 'has coordinates' do
-      npc.cell = cell
-      expect(npc.coords).to eq [0, 0]
+  describe "#to_s" do
+    it 'has a unique character' do
+      expect(npc.to_s).to eq " D "
     end
   end
 end

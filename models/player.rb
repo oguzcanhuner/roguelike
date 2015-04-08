@@ -1,24 +1,32 @@
+# An entity decorator class
 class Player
-  def initialize(movement_helper:)
-    @character = " @ "
-    @movement_helper = movement_helper
+  def initialize(entity)
+    @entity = entity
+    @entity.character = " @ "
   end
 
-  attr_accessor :cell
+  # refactor these by using delegation
+  def cell
+    @entity.cell
+  end
+
+  def cell=(cell)
+    @entity.cell = cell
+  end
 
   def coords
-    cell.coords
-  end
-
-  def to_s
-    @character
-  end
-
-  def solid?
-    true
+    @entity.coords
   end
 
   def move(direction)
-    @movement_helper.move(self, direction)
+    @entity.move(direction)
+  end
+
+  def to_s
+    @entity.to_s
+  end
+
+  def solid?
+    @entity.solid?
   end
 end
