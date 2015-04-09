@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe NPC do
-  let(:entity) { InteractiveEntity.new(movement_helper: double(:movement_helper)) }
+  let(:entity) { InteractiveEntity.new(map: double(:map)) }
   let(:npc) { NPC.new(entity) }
 
   describe "#to_s" do

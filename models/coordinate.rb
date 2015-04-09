@@ -9,6 +9,10 @@ class Coordinate
     object.x == x && object.y == y
   end
 
+  def hash
+    [x, y].hash
+  end
+
   def up
     Coordinate.new(x, y-1)
   end

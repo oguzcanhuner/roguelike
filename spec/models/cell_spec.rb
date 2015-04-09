@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Cell do
-  let(:cell) { Cell.new(5, 4) } 
+  let(:cell) { Cell.new(Coordinate.new(5, 4)) } 
 
   it 'has an x position' do
     expect(cell.x).to eq 5
@@ -11,7 +11,7 @@ describe Cell do
   end
 
   it 'has coordinates' do
-    expect(cell.coords).to eq [5, 4]
+    expect(cell.coord).to eql Coordinate.new(5, 4)
   end
 
   it 'initializes with an empty cell' do
@@ -19,11 +19,11 @@ describe Cell do
   end
 
   it 'takes an optional content parameter' do
-    Cell.new(5, 5, content: double(:player_cell))
+    Cell.new(Coordinate.new(5, 5), content: double(:player_cell))
   end
 
   describe '#to_s' do
-    let(:empty_cell) { Cell.new(1,1, content: EmptyCell.new) }
+    let(:empty_cell) { Cell.new(Coordinate.new(1, 1), content: EmptyCell.new) }
 
     it 'returns the character representation of the cell contents' do
       expect(empty_cell.to_s).to eq " . "

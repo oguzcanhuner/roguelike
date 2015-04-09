@@ -4,7 +4,7 @@ class Game
   end
 
   def setup
-    @movement_helper = MovementHelper.new(map: @map)
+    #@movement_helper = MovementHelper.new(map: @map)
     @player = initialize_player
     @npcs = initialize_npcs
     { player: @player }
@@ -56,7 +56,7 @@ class Game
   end
 
   def interactive_entity
-    InteractiveEntity.new(movement_helper: @movement_helper)
+    InteractiveEntity.new(map: @map)
   end
 
 end

@@ -14,23 +14,24 @@ class MapGenerator
   private
   def random_fill
     # fill in the border and then fill in the rest 40% of the time
-    @map.cells.each do |coords, cell|
-      if coordinate_is_an_edge(*coords)
-        @map.wall_cell(*coords)
-      elsif coordinate_is_in_the_middle(*coords)
-        @map.empty_cell(*coords)
+    @map.cells.each do |coord, cell|
+      if coordinate_is_an_edge(coord)
+        @map.wall_cell(coord)
+      elsif coordinate_is_in_the_middle(coord)
+        @map.empty_cell(coord)
       elsif rand <= PERCENTAGE_OF_WALLS
-        @map.wall_cell(*coords)
+        @map.wall_cell(coord)
       end
     end
   end
 
-  def coordinate_is_in_the_middle(x, y)
+  def coordinate_is_in_the_middle(coord)
     middle = (@map.width / 2).round
-    x == middle
+    coord.x == middle
   end
 
-  def coordinate_is_an_edge(x, y)
+  def coordinate_is_an_edge(coord)
+    x, y = coord.x, coord.y
     x == 0 || 
     x == (@map.width - 1) || 
     y == 0 || 
@@ -41,7 +42,7 @@ class MapGenerator
     count = 0
     ((cell.x-1)..(cell.x+1)).step do |x|
       ((cell.y-1)..(cell.y+1)).step do |y|
-        if @map.cell(x, y).wall?
+        if @map.cell(Coordinate.new(x, y)).wall?
           count += 1
         end
       end

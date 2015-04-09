@@ -1,15 +1,16 @@
 class InteractiveEntity < Entity
-  def initialize(movement_helper:)
-    @movement_helper = movement_helper
+  def initialize(map:)
+    @map = map
   end
 
   attr_accessor :cell
 
-  def coords
-    cell.coords
+  def coord
+    cell.coord
   end
 
-  def move(direction)
-    @movement_helper.move(self, direction)
+  def move(direction:)
+    @map.move_object(from: coord, to: coord.send(direction))
+    #@movement_helper.move(self, direction)
   end
 end

@@ -14,7 +14,7 @@ class UiHelper
 
     (area[:y_lower_boundary]..area[:y_upper_boundary]).step  do |y|
       (area[:x_lower_boundary]..area[:x_upper_boundary]).step do |x|
-        output << (@map.cell(x, y) || NullCell.new).to_s
+        output << (@map.cell(Coordinate.new(x, y)) || NullCell.new).to_s
       end
       output << "\n"
     end 
@@ -36,7 +36,7 @@ class UiHelper
   private
 
   def area_around_player
-    x, y = @player.coords
+    x, y = @player.coord.x, @player.coord.y
     boundaries = {
       x_lower_boundary: x - WINDOW_WIDTH/2,
       x_upper_boundary: x + WINDOW_WIDTH/2,

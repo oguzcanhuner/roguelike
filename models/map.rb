@@ -7,38 +7,38 @@ class Map
 
   attr_reader :height, :width, :cells
 
-  def cell(x, y)
-    @cells[[x, y]] || NullCell.new
+  def cell(coord)
+    @cells[coord] || NullCell.new
   end
 
-  def populate_cell(x, y, content)
-    cell = @cells[[x, y]]
+  def populate_cell(coord, content)
+    cell = @cells[coord]
     cell.content = content
     content.cell = cell
   end
 
   def populate_random_empty_cell(content)
-    empty_cells = @cells.collect do |coords, cell|
+    empty_cells = @cells.collect do |coord, cell|
       cell if cell.empty? 
     end.compact
 
-    x, y = empty_cells.sample.coords
-    populate_cell(x, y, content)
+    coord = empty_cells.sample.coord
+    populate_cell(coord, content)
   end
 
-  def empty_cell(x, y)
-    @cells[[x, y]].content = EmptyCell.new
+  def empty_cell(coord)
+    @cells[coord].content = EmptyCell.new
   end
 
-  def wall_cell(x, y)
-    @cells[[x, y]].content = Wall.new
+  def wall_cell(coord)
+    @cells[coord].content = Wall.new
   end
 
   def move_object(from:, to:)
-    if cell(*to).passable?
-      object = cell(*from).content
-      populate_cell(*to, object)
-      empty_cell(*from)
+    if cell(to).passable?
+      object = cell(from).content
+      populate_cell(to, object)
+      empty_cell(from)
     end
   end
 
@@ -46,9 +46,10 @@ class Map
   def initialize_cells
     collection = {}
 
-    height.times do |y_pos|
-      width.times do |x_pos|
-        collection[[x_pos, y_pos]] = Cell.new(x_pos, y_pos)
+    height.times do |y|
+      width.times do |x|
+        coord = Coordinate.new(x, y)
+        collection[coord] = Cell.new(coord)
       end
     end
 

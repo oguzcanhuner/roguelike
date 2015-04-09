@@ -14,8 +14,8 @@ class Player
     @entity.cell = cell
   end
 
-  def coords
-    @entity.coords
+  def coord
+    @entity.coord
   end
 
   def move(direction)
