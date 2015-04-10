@@ -19,5 +19,6 @@ class MovementPhase
 
   def move_player(direction)
     @player.move(direction: direction)
+    @game.add_message("Player moved #{ direction.to_s}")
   end
 end

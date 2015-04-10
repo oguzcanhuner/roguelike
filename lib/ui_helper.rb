@@ -2,9 +2,10 @@ class UiHelper
   WINDOW_HEIGHT = 15
   WINDOW_WIDTH = 20
 
-  def initialize(map:, player:)
+  def initialize(map:, player:, messages: [])
     @map = map
     @player = player
+    @messages = messages
   end
 
   def draw
@@ -18,6 +19,7 @@ class UiHelper
       end
       output << "\n"
     end 
+    @messages.last(3).each { |message| output << "#{message}\n" }
     output
   end
 

@@ -14,7 +14,7 @@ game = Game.new(map: map)
 environment = game.setup
 player = environment.fetch(:player)
 
-ui = UiHelper.new(map: map, player: player)
+ui = UiHelper.new(map: map, player: player, messages: game.messages)
 
 Dispel::Screen.open do |screen|
 

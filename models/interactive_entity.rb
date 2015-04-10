@@ -11,6 +11,5 @@ class InteractiveEntity < Entity
 
   def move(direction:)
     @map.move_object(from: coord, to: coord.send(direction))
-    #@movement_helper.move(self, direction)
   end
 end

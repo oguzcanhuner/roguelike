@@ -11,8 +11,11 @@ class Game
 
   def initialize(map:)
     @map = map
+    @messages = []
     super()
   end
+
+  attr_reader :messages
 
   def setup
     @player = initialize_player
@@ -20,11 +23,14 @@ class Game
     { player: @player }
   end
 
-
   def step(key)
     current_phase = state.new(self, player: @player)
     current_phase.perform(key)
     npc_phase
+  end
+
+  def add_message(message)
+    @messages << message
   end
 
   private
