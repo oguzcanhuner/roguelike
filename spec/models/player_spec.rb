@@ -5,7 +5,7 @@ describe Player do
   let(:player) { Player.new(entity) }
 
   describe '#to_s' do
-    it "has a character" do
+    it "has a unique character" do
       expect(player.to_s).to eql " @ "
     end
   end
