@@ -1,34 +1,33 @@
+require 'state_machine' 
 class Game
+  state_machine :state, initial: :moving do
+    state :moving, value: MovementPhase
+    state :attacking, value: AttackPhase
+
+    event :attack do
+      transition moving: :attacking, attacking: :moving
+    end
+  end
+
   def initialize(map:)
     @map = map
+    super()
   end
 
   def setup
-    #@movement_helper = MovementHelper.new(map: @map)
     @player = initialize_player
     @npcs = initialize_npcs
     { player: @player }
   end
 
+
   def step(key)
-    send(*(keys[key] || [:do_nothing]))
+    current_phase = state.new(self, player: @player)
+    current_phase.perform(key)
     npc_phase
-    @map
   end
 
   private
-  def keys
-  {
-    'h' => [:move_player, :left],
-    'j' => [:move_player, :down],
-    'k' => [:move_player, :up],
-    'l' => [:move_player, :right],
-  }
-  end
-
-  def do_nothing
-  end
-
   def initialize_npcs
     npcs = []
     10.times do
@@ -43,10 +42,6 @@ class Game
     player = Player.new(interactive_entity)
     @map.populate_random_empty_cell(player)
     player
-  end
-
-  def move_player(direction)
-    @player.move(direction: direction)
   end
 
   def npc_phase

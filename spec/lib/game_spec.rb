@@ -41,5 +41,10 @@ describe Game do
         game.step('k')
       end
     end
+
+    context 'attacking' do
+      it 'lets the player attack a cell' do
+      end
+    end
   end
 end
