@@ -9,4 +9,10 @@ describe NPC do
       expect(npc.to_s).to eq " D "
     end
   end
+
+  describe '#health' do
+    it 'has a health' do
+      expect(npc.health).to eql 15
+    end
+  end
 end

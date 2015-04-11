@@ -12,7 +12,7 @@ describe Player do
 
   describe '#health' do
     it 'has a health' do
-      expect(player.health).to eql 20
+      expect(player.health).to eql 25
     end
   end
 
