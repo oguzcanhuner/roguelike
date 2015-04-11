@@ -21,6 +21,14 @@ describe UiHelper do
       it 'outputs the player' do
         expect(helper.draw).to include "@"
       end
+
+      it "outputs the player's name" do
+        expect(helper.draw).to include "#{player.name} the Player"
+      end
+
+      it "outputs the player's name" do
+        expect(helper.draw).to include "health: #{player.health}"
+      end
     end
   end
 end

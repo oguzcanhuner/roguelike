@@ -1,6 +1,7 @@
 class MapGenerator
   PERCENTAGE_OF_WALLS = 0.35
-  def initialize(map: map)
+
+  def initialize(map:)
     @map = map
   end
 

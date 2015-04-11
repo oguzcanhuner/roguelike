@@ -10,32 +10,36 @@ class UiHelper
 
   def draw
     output = ""
-
-    area = area_around_player
-
-    (area[:y_lower_boundary]..area[:y_upper_boundary]).step  do |y|
-      (area[:x_lower_boundary]..area[:x_upper_boundary]).step do |x|
-        output << (@map.cell(Coordinate.new(x, y)) || NullCell.new).to_s
-      end
-      output << "\n"
-    end 
-    @messages.last(3).each { |message| output << "#{message}\n" }
-    output
-  end
-
-  # for testing
-  def draw_whole_map
-    output = ""
-    @map.height.times do |y|
-      @map.width.times do |x|
-        output << @map.cell(x, y).to_s
-      end
-      output << "\n"
-    end 
+    output << game_window
+    output << player_stats
+    output << messages
     output
   end
 
   private
+
+  def game_window
+    string = ""
+    area = area_around_player
+
+    (area[:y_lower_boundary]..area[:y_upper_boundary]).step  do |y|
+      (area[:x_lower_boundary]..area[:x_upper_boundary]).step do |x|
+        string << (@map.cell(Coordinate.new(x, y)) || NullCell.new).to_s
+      end
+      string << "\n"
+    end 
+    string
+  end
+
+  def player_stats
+    "#{@player.name} the Player | health: #{@player.health}\n\n"
+  end
+
+  def messages
+    string = ""
+    @messages.last(3).each { |message| string << "#{message}\n" }
+    string
+  end
 
   def area_around_player
     x, y = @player.coord.x, @player.coord.y
@@ -45,10 +49,10 @@ class UiHelper
       y_lower_boundary: y - WINDOW_HEIGHT/2,
       y_upper_boundary: y + WINDOW_HEIGHT/2
     }
-    normalize_boundaries(boundaries)
+    ensure_boundaries_are_within_map_bounds(boundaries)
   end
 
-  def normalize_boundaries(boundaries)
+  def ensure_boundaries_are_within_map_bounds(boundaries)
     if boundaries[:x_lower_boundary] < 0
       boundaries[:x_upper_boundary] += boundaries[:x_lower_boundary] * -1
       boundaries[:x_lower_boundary] = 0

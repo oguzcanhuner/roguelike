@@ -5,4 +5,12 @@ class Player < SimpleDelegator
     super(entity)
     entity.character = " @ "
   end
+
+  def health
+    20
+  end
+
+  def name
+    "Oz"
+  end
 end

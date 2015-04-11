@@ -22,6 +22,15 @@ describe Coordinate do
     end
   end
 
+  describe '#hash' do
+    it 'creates a unique key to allow hash key comparison using coordinate values' do
+      hash = {}
+      hash[Coordinate.new(1, 2)] = 1
+
+      expect( hash[Coordinate.new(1, 2)] ).to eq 1
+    end
+  end
+
   describe '#up' do
     it 'returns a coordinate above the current coordinate' do
       expect(coord.up).to eql Coordinate.new(6, 8)
