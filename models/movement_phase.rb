@@ -7,9 +7,9 @@ class MovementPhase
     'a' => [:start_attack]
   }
 
-  def initialize(game, player:)
-    @game = game
-    @player = player
+  def initialize(args)
+    @game = args.fetch(:game)
+    @player = args.fetch(:player)
   end
 
   def perform(key)

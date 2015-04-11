@@ -7,8 +7,10 @@ class AttackPhase
     'q' => [:cancel]
   }
 
-  def initialize(game, player:)
-    @game = game
+  def initialize(args)
+    @game = args.fetch(:game)
+    @map = args.fetch(:map)
+    @player = args.fetch(:player)
   end
 
   def perform(key)
@@ -19,10 +21,20 @@ class AttackPhase
 
   private
 
-  def attack(direction)
-    attack_cell = @player.coord.send(direction)
-    target = attack_cell.content
+  def cancel
+    @game.cancel_attack
+    @game.messages << "Player cancelled attack"
+  end
 
-    player.attack(target)
+  def attack(direction)
+    target_coord = @player.coord.send(direction)
+    target = @map.cell(target_coord).content
+
+    if @player.attack(target)
+      @game.messages << "Player attacked #{target.class.to_s} for #{ @player.attack_value } damage"
+    else
+      @game.messages << "Player failed to attack"
+    end
+    @game.attack
   end
 end
