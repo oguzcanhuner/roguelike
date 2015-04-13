@@ -1,15 +1,14 @@
-class MovementPhase
+class PlayerPhase
   KEYS = {
     'h' => [:move_player, :left],
     'j' => [:move_player, :down],
     'k' => [:move_player, :up],
-    'l' => [:move_player, :right],
-    'a' => [:start_attack]
+    'l' => [:move_player, :right]
   }
 
-  def initialize(args)
-    @game = args.fetch(:game)
-    @player = args.fetch(:player)
+  def initialize(game:, player:)
+    @game = game
+    @player = player
   end
 
   def perform(key)

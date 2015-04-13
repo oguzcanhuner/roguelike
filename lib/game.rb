@@ -1,22 +1,7 @@
-require 'state_machine' 
 class Game
-  state_machine :state, initial: :moving do
-    state :moving, value: MovementPhase
-    state :attacking, value: AttackPhase
-
-    event :attack do
-      transition moving: :attacking, attacking: :moving
-    end
-
-    event :cancel_attack do
-      transition attacking: :moving
-    end
-  end
-
   def initialize(map:)
     @map = map
     @messages = []
-    super()
   end
 
   attr_reader :messages
@@ -28,8 +13,7 @@ class Game
   end
 
   def step(key)
-    current_phase = state.new(game: self, map: @map, player: @player)
-    current_phase.perform(key)
+    player_phase(key)
     npc_phase
   end
 
@@ -55,9 +39,13 @@ class Game
   end
 
   def npc_phase
-    @npcs.each do |npc|
-      npc.move(direction: [:left, :right, :up, :down].sample)
-    end
+    phase = NpcPhase.new(game: self, npcs: @npcs)
+    phase.perform
+  end
+
+  def player_phase(key)
+    phase = PlayerPhase.new(game: self, player: @player)
+    phase.perform(key)
   end
 
   def interactive_entity
