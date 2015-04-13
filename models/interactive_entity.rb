@@ -15,4 +15,8 @@ class InteractiveEntity < Entity
   def move(direction:)
     @map.move_object(from: coord, to: coord.send(direction))
   end
+
+  def attackable?
+    true
+  end
 end

@@ -4,7 +4,7 @@ class Game
     @messages = []
   end
 
-  attr_reader :messages
+  attr_reader :messages, :map, :player
 
   def setup
     @player = initialize_player
@@ -44,7 +44,7 @@ class Game
   end
 
   def player_phase(key)
-    phase = PlayerPhase.new(game: self, player: @player)
+    phase = PlayerPhase.new(game: self)
     phase.perform(key)
   end
 

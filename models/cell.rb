@@ -24,6 +24,10 @@ class Cell
   def empty?
     content.class == EmptyCell
   end
+
+  def attackable?
+    content.attackable?
+  end
 end
 
 class EmptyCell
@@ -36,6 +40,10 @@ class EmptyCell
   end
 
   def solid?
+    false
+  end
+
+  def attackable?
     false
   end
 end
@@ -52,6 +60,10 @@ class Wall
   def solid?
     true
   end
+
+  def attackable?
+    false
+  end
 end
 
 class NullCell
@@ -65,5 +77,9 @@ class NullCell
 
   def wall?
     true
+  end
+
+  def attackable?
+    false
   end
 end

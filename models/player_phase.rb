@@ -1,14 +1,15 @@
 class PlayerPhase
   KEYS = {
-    'h' => [:move_player, :left],
-    'j' => [:move_player, :down],
-    'k' => [:move_player, :up],
-    'l' => [:move_player, :right]
+    'h' => [:move_or_attack, :left],
+    'j' => [:move_or_attack, :down],
+    'k' => [:move_or_attack, :up],
+    'l' => [:move_or_attack, :right]
   }
 
-  def initialize(game:, player:)
+  def initialize(game:)
     @game = game
-    @player = player
+    @player = game.player
+    @map = game.map
   end
 
   def perform(key)
@@ -19,13 +20,16 @@ class PlayerPhase
 
   private
 
-  def move_player(direction)
-    @player.move(direction: direction)
-    @game.add_message("Player moved #{ direction.to_s}")
-  end
+  def move_or_attack(direction)
+    target_cell = @map.cell(@player.coord.send(direction))
 
-  def start_attack
-    @game.add_message("Pick a direction to attack in")
-    @game.attack
+    if target_cell.attackable?
+      @player.attack(target_cell.content)
+      @game.add_message("Player attacked #{ target_cell.content.class }")
+    else
+      @player.move(direction: direction)
+      @game.add_message("Player moved #{ direction.to_s}")
+    end
+
   end
 end

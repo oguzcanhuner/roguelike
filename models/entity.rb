@@ -8,4 +8,8 @@ class Entity
   def solid?
     true
   end
+
+  def attackable?
+    false
+  end
 end
