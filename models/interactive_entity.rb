@@ -4,9 +4,10 @@ class InteractiveEntity < Entity
     @base_health_value = 20
     @base_attack_value = 5
     @health = max_health
+    @alive = true
   end
 
-  attr_accessor :cell, :health
+  attr_accessor :cell, :health, :alive
   attr_reader :base_health_value, :base_attack_value
 
   def coord
@@ -21,6 +22,17 @@ class InteractiveEntity < Entity
     true
   end
 
+  def attack(target)
+    target.take_damage(attack_value)
+  end
+
+  def take_damage(damage)
+    self.health -= damage
+    die if self.health < 0
+  end
+
+  private
+
   def max_health
     base_health_value
   end
@@ -29,11 +41,8 @@ class InteractiveEntity < Entity
     base_attack_value
   end
 
-  def attack(target)
-    target.take_damage(attack_value)
-  end
-
-  def take_damage(damage)
-    self.health =- damage
+  def die
+    @map.empty_cell(self.coord)
+    self.alive = false
   end
 end

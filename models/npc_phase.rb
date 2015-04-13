@@ -5,7 +5,7 @@ class NpcPhase
   end
 
   def perform
-    @npcs.each do |npc|
+    @npcs.collect{|npc| npc if npc.alive }.compact.each do |npc|
       npc.move(direction: [:left, :right, :up, :down].sample)
     end
   end
