@@ -2,19 +2,11 @@
 
 require 'dispel'
 require 'pry'
-require './nethack'
+require './lib/rogue'
 
-# set up the map
-map = Map.new(height: 30, width: 40)
-map_generator = MapGenerator.new(map: map)
-map_generator.generate_cave
+Rogue.initialize
 
-# set up the game mechanics
-game = Game.new(map: map)
-environment = game.setup
-player = environment.fetch(:player)
-
-ui = UiHelper.new(map: map, player: player, messages: game.messages)
+ui = UiHelper.new(map: Rogue.map, player: Rogue.game.player, messages: Rogue.game.messages)
 
 Dispel::Screen.open do |screen|
 
@@ -22,7 +14,8 @@ Dispel::Screen.open do |screen|
 
   Dispel::Keyboard.output do |key|
     break if key == :"Ctrl+c"
-    game.step(key)
+    Rogue.game.step(key)
     screen.draw ui.draw
   end
 end
+

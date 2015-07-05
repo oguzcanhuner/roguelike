@@ -21,7 +21,7 @@ require 'dotenv'
 Dotenv.load
 #CodeClimate::TestReporter.start
 
-require './nethack'
+require './lib/rogue'
 require 'pry'
 
 RSpec.configure do |config|
