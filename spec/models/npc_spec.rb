@@ -12,7 +12,7 @@ describe NPC do
 
   describe '#health' do
     it 'has a health' do
-      expect(npc.health).to eql 15
+      expect(npc.health).to eql 20
     end
   end
 end

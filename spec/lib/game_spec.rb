@@ -21,6 +21,11 @@ describe Game do
       let(:environment) { game.setup }
       let(:player) { environment.fetch(:player) }
 
+      before do
+        # move the player to the middle of the map
+        map.move_object(from: player.coord, to: Coordinate.new(5,5))
+      end
+
       it 'moves the player one step to the left' do
         expect(player).to receive(:move).with({direction: :left})
         game.step('h')

@@ -3,4 +3,5 @@ class NPC < SimpleDelegator
     super(entity)
     entity.character = " D "
   end
+
 end
