@@ -6,7 +6,7 @@ require './lib/rogue'
 
 Rogue.initialize
 
-ui = UiHelper.new(map: Rogue.map, player: Rogue.game.player, messages: Rogue.game.messages)
+ui = Rogue::UiHelper.new(map: Rogue.map, player: Rogue.game.player, messages: Rogue.game.messages)
 
 Dispel::Screen.open do |screen|
 

@@ -1,18 +1,18 @@
 require 'spec_helper'
 
-describe UiHelper do
+describe Rogue::UiHelper do
   it 'initializes with a map and a player' do
-    UiHelper.new(map: double(:map), player: double(:player))
+    Rogue::UiHelper.new(map: double(:map), player: double(:player))
   end
 
   describe '#draw' do
     describe 'returning a string representation of the map' do
       let(:map) { Map.new }
-      let(:game) { Game.new(map: map) }
+      let(:game) { Rogue::Game.new(map: map) }
       let(:environment) { game.setup }
       let(:player) { environment.fetch(:player) }
 
-      let!(:helper) { UiHelper.new(map: map, player: player) }
+      let!(:helper) { Rogue::UiHelper.new(map: map, player: player) }
       
       it 'outputs a map as a string' do
         expect(helper.draw).to be_a String

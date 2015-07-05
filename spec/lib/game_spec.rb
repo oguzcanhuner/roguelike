@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Game do
+describe Rogue::Game do
   let(:map) { Map.new }
-  let(:game) { Game.new(map: map) }
+  let(:game) { Rogue::Game.new(map: map) }
 
   describe '#setup' do
     it 'returns an instance of the player' do
