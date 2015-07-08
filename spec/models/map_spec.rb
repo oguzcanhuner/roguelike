@@ -4,8 +4,7 @@ describe Map do
   context 'given a 5 by 5 map' do
     let(:map) {Map.new(height: 5, width: 6)}
     let(:empty_cell) { EmptyCell.new }
-    let(:entity) { InteractiveEntity.new(map: map) }
-    let(:player) { Player.new(entity) }
+    let(:player) { Player.new }
     let(:coordinate) { Coordinate.new(1, 2) }
 
     describe '#cell' do

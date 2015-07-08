@@ -1,8 +1,7 @@
 require 'spec_helper'
 
 describe NPC do
-  let(:entity) { InteractiveEntity.new(map: double(:map)) }
-  let(:npc) { NPC.new(entity) }
+  let(:npc) { NPC.new }
 
   describe "#to_s" do
     it 'has a unique character' do

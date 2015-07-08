@@ -26,7 +26,7 @@ module Rogue
     def initialize_npcs
       npcs = []
       10.times do
-        npc = NPC.new(interactive_entity)
+        npc = NPC.new
         @map.populate_random_empty_cell(npc)
         npcs << npc
       end
@@ -34,7 +34,7 @@ module Rogue
     end
 
     def initialize_player
-      player = Player.new(interactive_entity)
+      player = Player.new
       @map.populate_random_empty_cell(player)
       player
     end
@@ -48,10 +48,5 @@ module Rogue
       phase = PlayerPhase.new(game: self)
       phase.perform(key)
     end
-
-    def interactive_entity
-      InteractiveEntity.new(map: @map)
-    end
-
   end
 end

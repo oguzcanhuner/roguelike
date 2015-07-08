@@ -24,11 +24,11 @@ class PlayerPhase
     target_cell = @map.cell(@player.coord.send(direction))
 
     if target_cell.attackable?
-      @player.attack(target_cell.content)
       @game.add_message("Player attacked #{ target_cell.content.class }")
+      @player.attack(target_cell.content)
     else
-      @player.move(direction: direction)
       @game.add_message("Player moved #{ direction.to_s}")
+      @player.move(direction: direction)
     end
 
   end

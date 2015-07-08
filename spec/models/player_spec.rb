@@ -1,8 +1,7 @@
 require 'spec_helper'
 
 describe Player do
-  let(:entity) { InteractiveEntity.new(map: double(:map)) }
-  let(:player) { Player.new(entity) }
+  let(:player) { Player.new }
 
   describe '#to_s' do
     it "has a unique character" do
