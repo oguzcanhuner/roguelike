@@ -1,57 +1,20 @@
 # An entity decorator class
 class Player
   def initialize
+    @name = "Oz"
     @character = " @ "
-    @base_health_value = 20
-    @base_attack_value = 5
+    @max_health = 20
+    @max_attack = 5
     @health = max_health
     @alive = true
-    @name = "Oz"
   end
+
+  attr_reader :name
 
   include Rogue::Mover
-
-  attr_accessor :health, :alive
-  attr_reader :base_health_value, :base_attack_value, :name, :character
-
-  def attackable?
-    true
-  end
-
-  def attack(target)
-    target.take_damage(attack_value)
-  end
-
-  def take_damage(damage)
-    self.health -= damage
-    die if self.health < 0
-  end
+  include Rogue::Fighter
 
   def to_s
-    character
+    @character
   end
-
-  def solid?
-    true
-  end
-
-  def attackable?
-    false
-  end
-
-  private
-
-  def max_health
-    base_health_value
-  end
-
-  def attack_value
-    base_attack_value
-  end
-
-  def die
-    @map.empty_cell(self.coord)
-    self.alive = false
-  end
-
 end
