@@ -1,7 +1,10 @@
 # Ruby Roguelike (name tbc)
 
+![alt text](https://raw.githubusercontent.com/oguzcanhuner/roguelike/master/game.png "Rogue")
+
 From wikipedia:
 > Roguelike is a subgenre of role-playing video games, characterized by procedural level generation, turn-based gameplay, tile-based graphics, permanent death, and typically based on a high fantasy narrative setting
+
 
 ## Setting up
 - Clone the repo
