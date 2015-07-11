@@ -9,8 +9,7 @@ describe Rogue::UiHelper do
     describe 'returning a string representation of the map' do
       let(:map) { Map.new }
       let(:game) { Rogue::Game.new(map: map) }
-      let(:environment) { game.setup }
-      let(:player) { environment.fetch(:player) }
+      let(:player) { game.player }
 
       let!(:helper) { Rogue::UiHelper.new(map: map, player: player) }
       

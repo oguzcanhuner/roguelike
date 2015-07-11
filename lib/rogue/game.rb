@@ -3,19 +3,16 @@ module Rogue
     def initialize(map:)
       @map = map
       @messages = []
+      @player = initialize_player
+      @npcs = initialize_npcs
+      @active_phase = PlayerPhase.new(game: self)
     end
 
     attr_reader :messages, :map, :player
 
-    def setup
-      @player = initialize_player
-      @npcs = initialize_npcs
-      { player: @player }
-    end
-
     def step(key)
-      player_phase(key)
-      npc_phase
+      @active_phase = @active_phase.perform(key)
+      npc_phase unless @active_phase.lock_movements?
     end
 
     def add_message(message)
@@ -44,9 +41,5 @@ module Rogue
       phase.perform
     end
 
-    def player_phase(key)
-      phase = PlayerPhase.new(game: self)
-      phase.perform(key)
-    end
   end
 end

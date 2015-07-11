@@ -8,8 +8,8 @@ module Rogue
       map_generator.generate_cave
 
       @game = Game.new(map: map)
-      @game.setup
     end
+
     attr_reader :map, :game
   end
 end

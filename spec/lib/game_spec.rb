@@ -6,22 +6,9 @@ describe Rogue::Game do
   let(:map) { game.map }
 
 
-  describe '#setup' do
-    it 'returns an instance of the player' do
-      expect(game.setup.keys).to eq [:player]
-    end
-
-    it 'adds a player to the map' do
-      game.setup
-      expect(map.cells.find{ |i, c| c.content.class == Player }).to be_truthy
-    end
-
-  end
-
   describe "#step" do
     context 'player movement' do
-      let(:environment) { game.setup }
-      let(:player) { environment.fetch(:player) }
+      let(:player) { game.player }
 
       before do
         # move the player to the middle of the map
