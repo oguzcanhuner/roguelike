@@ -26,10 +26,10 @@ end
 class PlayerPhase < Phase
   def keys
     {
-      'h' => [:move_or_attack, :left],
-      'j' => [:move_or_attack, :down],
-      'k' => [:move_or_attack, :up],
-      'l' => [:move_or_attack, :right],
+      'h' => [:move, :left],
+      'j' => [:move, :down],
+      'k' => [:move, :up],
+      'l' => [:move, :right],
       'a' => [:start_attack]
     }
   end
@@ -40,16 +40,10 @@ class PlayerPhase < Phase
 
   private
 
-  def move_or_attack(direction)
+  def move(direction)
     target_cell = @map.cell(@player.coord.send(direction))
-
-    if target_cell.attackable?
-      @game.add_message("Player attacked #{ target_cell.content.class }")
-      @player.attack(target_cell.content)
-    else
-      @game.add_message("Player moved #{ direction.to_s}")
-      @player.move(direction: direction)
-    end
+    @game.add_message("Player moved #{ direction.to_s}")
+    @player.move(direction: direction)
 
     self
   end
