@@ -1,4 +1,6 @@
-Dir["./lib/**/*.rb"].each { |f| require f }
+require 'require_all'
+require_all 'lib'
+
 
 module Rogue
   class << self
