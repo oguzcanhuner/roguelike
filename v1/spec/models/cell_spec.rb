@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Cell do
   let(:cell) { Cell.new(Coordinate.new(5, 4)) } 
 

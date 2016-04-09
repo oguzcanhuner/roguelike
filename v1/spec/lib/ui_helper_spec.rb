@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Rogue::UiHelper do
   it 'initializes with a map and a player' do
     Rogue::UiHelper.new(map: double(:map), player: double(:player))

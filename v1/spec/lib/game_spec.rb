@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Rogue::Game do
   before { Rogue.initialize }
   let(:game) { Rogue.game }
