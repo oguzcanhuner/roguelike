@@ -3,14 +3,29 @@ class Phase
     @game = game
     @player = game.player
     @map = game.map
+    @action = :move
+    @keys = {}
   end
 
   def keys
-    raise "Implement this"
+    @keys
+  end
+
+  def directions
+    {
+        'h' => :left,
+        'j' => :down,
+        'k' => :up,
+        'l' => :right
+    }
   end
 
   def perform(key)
-    if keys[key]
+    if directions[key]
+      target_cell = @map.cell(@player.coord.send(directions[key]))
+      @action = :attack if target_cell.attackable?
+      self.send(@action, directions[key])
+    elsif keys[key]
       self.send(*keys[key])
     else
       self
@@ -24,14 +39,12 @@ class Phase
 end
 
 class PlayerPhase < Phase
-  def keys
-    {
-      'h' => [:move, :left],
-      'j' => [:move, :down],
-      'k' => [:move, :up],
-      'l' => [:move, :right],
-      'a' => [:start_attack]
-    }
+  include MoveAction
+  include AttackAction
+
+  def initialize(game: Rogue.game)
+    super
+    keys['a'] = :start_attack
   end
 
   def lock_movements?
@@ -40,40 +53,26 @@ class PlayerPhase < Phase
 
   private
 
-  def move(direction)
-    target_cell = @map.cell(@player.coord.send(direction))
-    @game.add_message("Player moved #{ direction.to_s}")
-    @player.move(direction: direction)
-
-    self
-  end
-
   def start_attack
     AttackPhase.new
   end
 end
 
 class AttackPhase < Phase
-  def keys
-    {
-      'h' => [:attack, :left],
-      'j' => [:attack, :down],
-      'k' => [:attack, :up],
-      'l' => [:attack, :right],
-      'q' => [:cancel]
-    }
+  include AttackAction
+
+  def initialize(game: Rogue.game)
+    super
+    keys['q'] = :cancel
+    @action = :attack
   end
 
-  def attack(direction)
-    target_cell = @map.cell(@player.coord.send(direction))
-    if target_cell.attackable?
-      @game.add_message("Player attacked #{ target_cell.content.class }")
-      @player.attack(target_cell.content)
+  def perform(key)
+    if directions[key]
+      self.send(@action, directions[key])
     else
-      @game.add_message("Player attacked thin air")
+      self
     end
-
-    PlayerPhase.new
   end
 
   def cancel

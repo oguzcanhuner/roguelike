@@ -36,7 +36,7 @@ describe Rogue::Game do
 
       let(:npc) { game.npcs[0] }
 
-      before do
+      before(:each) do
         move_player_to_map_center
       end
 
@@ -50,6 +50,12 @@ describe Rogue::Game do
       it 'does not allow attacking cells with unattackable content' do
         expect(player).not_to receive(:attack)
         game.step('a')
+        game.step('k')
+      end
+
+      it 'attacks attackable cells without needing to manually initiate the attack phase' do
+        map.move_object(from: npc.coord, to: player.coord.up)
+        expect(player).to receive(:attack).with(npc)
         game.step('k')
       end
     end
