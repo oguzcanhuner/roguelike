@@ -8,7 +8,7 @@ module Rogue
       @active_phase = PlayerPhase.new(game: self)
     end
 
-    attr_reader :messages, :map, :player
+    attr_reader :messages, :map, :player, :npcs
 
     def step(key)
       @active_phase = @active_phase.perform(key)

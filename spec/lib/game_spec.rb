@@ -2,15 +2,13 @@ describe Rogue::Game do
   before { Rogue.initialize }
   let(:game) { Rogue.game }
   let(:map) { game.map }
-
+  let(:player) { game.player }
 
   describe "#step" do
     context 'player movement' do
-      let(:player) { game.player }
 
       before do
-        # move the player to the middle of the map
-        map.move_object(from: player.coord, to: Coordinate.new(5,5))
+        move_player_to_map_center
       end
 
       it 'moves the player one step to the left' do
@@ -35,8 +33,29 @@ describe Rogue::Game do
     end
 
     context 'attacking' do
-      it 'lets the player attack a cell' do
+
+      let(:npc) { game.npcs[0] }
+
+      before do
+        move_player_to_map_center
+      end
+
+      it 'lets the player attack a cell with attackable content' do
+        map.move_object(from: npc.coord, to: player.coord.up)
+        expect(player).to receive(:attack).with(npc)
+        game.step('a')
+        game.step('k')
+      end
+
+      it 'does not allow attacking cells with unattackable content' do
+        expect(player).not_to receive(:attack)
+        game.step('a')
+        game.step('k')
       end
     end
+  end
+
+  def move_player_to_map_center
+    map.move_object(from: player.coord, to: Coordinate.new(5,5))
   end
 end
