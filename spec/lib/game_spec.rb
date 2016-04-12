@@ -58,6 +58,13 @@ describe Rogue::Game do
         expect(player).to receive(:attack).with(npc)
         game.step('k')
       end
+
+      it 'allows cancelling of attack phase without affecting map state' do
+        expect(player).to receive(:move)
+        game.step('a')
+        game.step('q')
+        game.step('k')
+      end
     end
   end
 

@@ -4,6 +4,8 @@ module MoveAction
     @game.add_message("Player moved #{ direction.to_s}")
     @player.move(direction: direction)
 
-    self
+    new_phase = PlayerPhase.new
+    new_phase.last_action = :attack
+    new_phase
   end
 end

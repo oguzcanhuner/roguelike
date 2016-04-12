@@ -12,7 +12,7 @@ module Rogue
 
     def step(key)
       @active_phase = @active_phase.perform(key)
-      npc_phase unless @active_phase.lock_movements?
+      npc_phase unless [:cancel, :start_attack].include?(@active_phase.last_action)
     end
 
     def add_message(message)

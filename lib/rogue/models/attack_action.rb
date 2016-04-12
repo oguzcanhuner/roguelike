@@ -8,6 +8,8 @@ module AttackAction
       @game.add_message("Player attacked thin air")
     end
 
-    PlayerPhase.new
+    new_phase = PlayerPhase.new
+    new_phase.last_action = :attack
+    new_phase
   end
 end

@@ -7,9 +7,7 @@ class Phase
     @keys = {}
   end
 
-  def keys
-    @keys
-  end
+  attr_accessor :last_action, :keys
 
   def directions
     {
@@ -32,10 +30,6 @@ class Phase
     end
   end
 
-  # most phases will stop the flow of the game (while an action is being taken)
-  def lock_movements?
-    true
-  end
 end
 
 class PlayerPhase < Phase
@@ -47,14 +41,12 @@ class PlayerPhase < Phase
     keys['a'] = :start_attack
   end
 
-  def lock_movements?
-    false
-  end
-
   private
 
   def start_attack
-    AttackPhase.new
+    new_phase = AttackPhase.new
+    new_phase.last_action = :start_attack
+    new_phase
   end
 end
 
@@ -70,13 +62,17 @@ class AttackPhase < Phase
   def perform(key)
     if directions[key]
       self.send(@action, directions[key])
+    elsif keys[key]
+      self.send(*keys[key])
     else
       self
     end
   end
 
   def cancel
-    PlayerPhase.new
+    new_phase = PlayerPhase.new
+    new_phase.last_action = :cancel
+    new_phase
   end
 end
 
