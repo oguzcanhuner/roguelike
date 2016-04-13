@@ -1,13 +1,17 @@
 class Phase
-  def initialize(game: Rogue.game)
+  def initialize(game: Rogue.game, last_action: nil)
     @game = game
     @player = game.player
     @map = game.map
     @action = :move
-    @keys = {}
+    @last_action = last_action
   end
 
-  attr_accessor :last_action, :keys
+  attr_accessor :last_action
+
+  def keys
+    raise "Implement this"
+  end
 
   def directions
     {
@@ -19,9 +23,12 @@ class Phase
   end
 
   def perform(key)
+    send_command(key)
+  end
+
+  def send_command(key)
     if directions[key]
-      target_cell = @map.cell(@player.coord.send(directions[key]))
-      @action = :attack if target_cell.attackable?
+      yield if block_given?
       self.send(@action, directions[key])
     elsif keys[key]
       self.send(*keys[key])
@@ -29,50 +36,45 @@ class Phase
       self
     end
   end
-
 end
 
 class PlayerPhase < Phase
   include MoveAction
   include AttackAction
 
-  def initialize(game: Rogue.game)
-    super
-    keys['a'] = :start_attack
+  def keys
+    {'a' => :start_attack}
+  end
+
+  def perform(key)
+    send_command(key) do
+      target_cell = @map.cell(@player.coord.send(directions[key]))
+      @action = :attack if target_cell.attackable?
+    end
   end
 
   private
 
   def start_attack
-    new_phase = AttackPhase.new
-    new_phase.last_action = :start_attack
-    new_phase
+    AttackPhase.new({last_action: __method__})
   end
 end
 
 class AttackPhase < Phase
   include AttackAction
 
-  def initialize(game: Rogue.game)
+  def initialize(game: Rogue.game, last_action: nil)
     super
-    keys['q'] = :cancel
     @action = :attack
   end
 
-  def perform(key)
-    if directions[key]
-      self.send(@action, directions[key])
-    elsif keys[key]
-      self.send(*keys[key])
-    else
-      self
-    end
+  def keys
+    {'q' => :cancel}
   end
+
+  private
 
   def cancel
-    new_phase = PlayerPhase.new
-    new_phase.last_action = :cancel
-    new_phase
+    PlayerPhase.new({last_action: __method__})
   end
 end
-
