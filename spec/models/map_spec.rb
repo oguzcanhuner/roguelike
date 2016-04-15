@@ -22,8 +22,6 @@ describe Map do
 
     describe '#empty_cell' do
       it 'adds an empty cell to the coordinates given' do
-        cell = map.empty_cell(coordinate)
-
         expect(map.cell(coordinate).content).to be_kind_of EmptyCell
       end
     end

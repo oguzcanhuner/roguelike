@@ -14,6 +14,7 @@ module Rogue
     end
 
     private
+
     def random_fill
       # fill in the border and then fill in the rest 40% of the time
       @map.cells.each do |coord, cell|

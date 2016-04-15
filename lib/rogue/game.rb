@@ -1,10 +1,10 @@
 module Rogue
   class Game
-    def initialize(map:)
+    def initialize(map: , number_of_npcs: 10)
       @map = map
       @messages = []
       @player = initialize_player
-      @npcs = initialize_npcs
+      @npcs = initialize_npcs(number_of_npcs)
       @active_phase = PlayerPhase.new(game: self)
     end
 
@@ -12,7 +12,7 @@ module Rogue
 
     def step(key)
       @active_phase = @active_phase.perform(key)
-      npc_phase unless [:cancel, :start_attack].include?(@active_phase.last_action)
+      npc_phase if [:move, :attack].include?(@active_phase.last_action)
     end
 
     def add_message(message)
@@ -20,9 +20,9 @@ module Rogue
     end
 
     private
-    def initialize_npcs
+    def initialize_npcs(number)
       npcs = []
-      10.times do
+      number.times do
         npc = NPC.new
         @map.populate_random_empty_cell(npc)
         npcs << npc

@@ -1,14 +1,28 @@
+module Rogue
+  class << self
+    def initialize
+      @map = Map.new(height: 10, width: 10)
+      @game = Game.new(map: map, number_of_npcs: 1)
+    end
+
+    attr_reader :map, :game
+  end
+end
+
 describe Rogue::Game do
   before { Rogue.initialize }
   let(:game) { Rogue.game }
   let(:map) { game.map }
   let(:player) { game.player }
+  let(:npc) { game.npcs[0] }
+
+  let(:helper) { Rogue::UiHelper.new(map: map, player: player) } #will help debugging tests
 
   describe "#step" do
     context 'player movement' do
 
-      before do
-        move_player_to_map_center
+      before(:each) do
+        reset_map
       end
 
       it 'moves the player one step to the left' do
@@ -34,10 +48,8 @@ describe Rogue::Game do
 
     context 'attacking' do
 
-      let(:npc) { game.npcs[0] }
-
       before(:each) do
-        move_player_to_map_center
+        reset_map
       end
 
       it 'lets the player attack a cell with attackable content' do
@@ -68,7 +80,9 @@ describe Rogue::Game do
     end
   end
 
-  def move_player_to_map_center
+  def reset_map
     map.move_object(from: player.coord, to: Coordinate.new(5,5))
+    map.move_object(from: npc.coord, to: Coordinate.new(0,0))
   end
+
 end
