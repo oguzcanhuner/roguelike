@@ -25,7 +25,7 @@ describe Coordinate do
       hash = {}
       hash[Coordinate.new(1, 2)] = 1
 
-      expect( hash[Coordinate.new(1, 2)] ).to eq 1
+      expect(hash[Coordinate.new(1, 2)]).to eq 1
     end
   end
 
@@ -47,6 +47,23 @@ describe Coordinate do
   describe '#right' do
     it 'returns a coordinate above the current coordinate' do
       expect(coord.right).to eql Coordinate.new(7, 9)
+    end
+  end
+  describe '#adjacent?' do
+    it 'returns true when coordinates are next to each other' do
+      expect(Coordinate.new(1, 3)).to be_adjacent(Coordinate.new(1,4))
+      expect(Coordinate.new(1, 3)).to be_adjacent(Coordinate.new(2,3))
+    end
+
+    it 'returns false when coordinates are not next to each other' do
+      expect(Coordinate.new(1, 3)).not_to be_adjacent(Coordinate.new(5,3))
+    end
+
+    it 'returns false when coordinates are diagonal' do
+      expect(Coordinate.new(1, 3)).not_to be_adjacent(Coordinate.new(0,2))
+      expect(Coordinate.new(1, 3)).not_to be_adjacent(Coordinate.new(0,4))
+      expect(Coordinate.new(1, 3)).not_to be_adjacent(Coordinate.new(2,2))
+      expect(Coordinate.new(1, 3)).not_to be_adjacent(Coordinate.new(2,4))
     end
   end
 end

@@ -5,6 +5,7 @@ class Phase
     @map = game.map
     @action = :move
     @last_action = last_action
+    @npcs = @game.npcs
   end
 
   attr_accessor :last_action

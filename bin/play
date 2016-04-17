@@ -14,8 +14,7 @@ Dispel::Screen.open do |screen|
 
   Dispel::Keyboard.output do |key|
     break if key == :"Ctrl+c"
-    Rogue.game.step(key)
+    break if Rogue.game.step(key).over?
     screen.draw ui.draw
   end
 end
-

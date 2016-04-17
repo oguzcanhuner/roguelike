@@ -1,7 +1,6 @@
 require 'require_all'
 require_all 'lib'
 
-
 module Rogue
   class << self
     def initialize
@@ -11,7 +10,6 @@ module Rogue
 
       @game = Game.new(map: map)
     end
-
     attr_reader :map, :game
   end
 end

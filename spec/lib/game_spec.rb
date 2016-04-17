@@ -4,8 +4,6 @@ module Rogue
       @map = Map.new(height: 10, width: 10)
       @game = Game.new(map: map, number_of_npcs: 1)
     end
-
-    attr_reader :map, :game
   end
 end
 
@@ -20,7 +18,6 @@ describe Rogue::Game do
 
   describe "#step" do
     context 'player movement' do
-
       before(:each) do
         reset_map
       end
@@ -47,7 +44,6 @@ describe Rogue::Game do
     end
 
     context 'attacking' do
-
       before(:each) do
         reset_map
       end
@@ -78,11 +74,32 @@ describe Rogue::Game do
         game.step('k')
       end
     end
+
+    context 'game returns current state after every step' do
+      it 'should return current state' do
+        expect(game.step('a')).to be_a(Rogue::Game)
+      end
+    end
+
+    context 'game is over when player dies' do
+      it 'should return game over when player is dead' do
+        player.take_damage!(400)
+        game.step('a')
+        expect(game).to be_over
+      end
+
+
+      it 'should continue the game when player is still alive' do
+        game.step('a')
+        expect(game).not_to be_over
+      end
+    end
   end
 
   def reset_map
-    map.move_object(from: player.coord, to: Coordinate.new(5,5))
-    map.move_object(from: npc.coord, to: Coordinate.new(0,0))
+    player.health = player.max_health
+    map.move_object(from: player.coord, to: Coordinate.new(5, 5))
+    map.move_object(from: npc.coord, to: Coordinate.new(0, 0))
   end
 
 end
