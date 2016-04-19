@@ -52,44 +52,53 @@ describe Coordinate do
 
   describe '#adjacent?' do
     it 'returns true when coordinates are next to each other' do
-      expect(Coordinate.new(1, 3)).to be_adjacent(Coordinate.new(1,4))
-      expect(Coordinate.new(1, 3)).to be_adjacent(Coordinate.new(2,3))
+      expect(Coordinate.new(1, 3)).to be_adjacent(Coordinate.new(1, 4))
+      expect(Coordinate.new(1, 3)).to be_adjacent(Coordinate.new(2, 3))
     end
 
     it 'returns false when coordinates are not next to each other' do
-      expect(Coordinate.new(1, 3)).not_to be_adjacent(Coordinate.new(5,3))
+      expect(Coordinate.new(1, 3)).not_to be_adjacent(Coordinate.new(5, 3))
     end
 
     it 'returns false when coordinates are diagonal' do
-      expect(Coordinate.new(1, 3)).not_to be_adjacent(Coordinate.new(0,2))
-      expect(Coordinate.new(1, 3)).not_to be_adjacent(Coordinate.new(0,4))
-      expect(Coordinate.new(1, 3)).not_to be_adjacent(Coordinate.new(2,2))
-      expect(Coordinate.new(1, 3)).not_to be_adjacent(Coordinate.new(2,4))
+      expect(Coordinate.new(1, 3)).not_to be_adjacent(Coordinate.new(0, 2))
+      expect(Coordinate.new(1, 3)).not_to be_adjacent(Coordinate.new(0, 4))
+      expect(Coordinate.new(1, 3)).not_to be_adjacent(Coordinate.new(2, 2))
+      expect(Coordinate.new(1, 3)).not_to be_adjacent(Coordinate.new(2, 4))
     end
   end
-  
+
   describe '#above?' do
     it 'returns whether a coordinate is above another coordinate' do
-      expect(coord).to be_above(Coordinate.new(1,10))
-      expect(coord).not_to be_above(Coordinate.new(10,1))
+      expect(coord).to be_above(Coordinate.new(1, 10))
+      expect(coord).not_to be_above(Coordinate.new(10, 1))
     end
   end
   describe '#below?' do
     it 'returns whether a coordinate is below another coordinate' do
-      expect(coord).to be_below(Coordinate.new(10,1))
-      expect(coord).not_to be_below(Coordinate.new(1,10))
+      expect(coord).to be_below(Coordinate.new(10, 1))
+      expect(coord).not_to be_below(Coordinate.new(1, 10))
     end
   end
   describe '#right_of?' do
     it 'returns whether a coordinate is right of another coordinate' do
-      expect(coord).to be_right_of(Coordinate.new(1,10))
-      expect(coord).not_to be_right_of(Coordinate.new(10,1))
+      expect(coord).to be_right_of(Coordinate.new(1, 10))
+      expect(coord).not_to be_right_of(Coordinate.new(10, 1))
     end
   end
   describe '#left_of?' do
     it 'returns whether a coordinate is left of another coordinate' do
-      expect(coord).to be_left_of(Coordinate.new(10,1))
-      expect(coord).not_to be_left_of(Coordinate.new(1,10))
+      expect(coord).to be_left_of(Coordinate.new(10, 1))
+      expect(coord).not_to be_left_of(Coordinate.new(1, 10))
+    end
+  end
+
+  describe '#direction_to_chase' do
+    it 'returns a direction that will move closer to another coordinate' do
+      expect(Coordinate.new(4, 7).direction_to_chase(coord)).to eq :down
+      expect(Coordinate.new(10, 7).direction_to_chase(coord)).to eq :up
+      expect(Coordinate.new(6, 7).direction_to_chase(coord)).to eq :right
+      expect(Coordinate.new(6, 11).direction_to_chase(coord)).to eq :left
     end
   end
 end

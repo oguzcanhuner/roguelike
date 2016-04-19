@@ -39,14 +39,24 @@ class Coordinate
   def above?(coord)
     self.y < coord.y
   end
+
   def below?(coord)
     self.y > coord.y
   end
+
   def left_of?(coord)
     self.x < coord.x
   end
+
   def right_of?(coord)
     self.x > coord.x
   end
 
+  def direction_to_chase(coord)
+    chase_directions = {:above? => :down, :below? => :up, :left_of? => :right, :right_of? => :left}
+    [:above?, :below?, :left_of?, :right_of?].each do |relation|
+      return chase_directions[relation] if self.send(relation, coord)
+    end
+    false
+  end
 end
