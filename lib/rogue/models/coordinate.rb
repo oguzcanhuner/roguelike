@@ -5,6 +5,8 @@ class Coordinate
 
   attr_reader :x, :y
 
+  CHASE_DIRECTIONS = {:above? => :down, :below? => :up, :left_of? => :right, :right_of? => :left}
+
   def eql?(object)
     object.x == x && object.y == y
   end
@@ -53,9 +55,8 @@ class Coordinate
   end
 
   def direction_to_chase(coord)
-    chase_directions = {:above? => :down, :below? => :up, :left_of? => :right, :right_of? => :left}
     [:above?, :below?, :left_of?, :right_of?].each do |relation|
-      return chase_directions[relation] if self.send(relation, coord)
+      return CHASE_DIRECTIONS[relation] if self.send(relation, coord)
     end
     false
   end

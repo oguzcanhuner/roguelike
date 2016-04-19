@@ -5,7 +5,7 @@ class NpcPhase < Phase
       if npc.coord.adjacent?(@game.player.coord)
         npc.attack(@player)
       else
-        npc.move(direction: [:left, :right, :up, :down].sample)
+        npc.move(direction: npc.coord.direction_to_chase(@player.coord))
       end
     end
   end
