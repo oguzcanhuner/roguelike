@@ -12,7 +12,7 @@ From wikipedia:
 
 ## Playing
 In the root directory:
-- `ruby bin/play`
+- `rake`
 
 ## What's supported?
 Currently you can only move the player around a single randomly generated map. The map includes some NPCs who move around randomly.

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Player do
   let(:player) { Player.new }
 

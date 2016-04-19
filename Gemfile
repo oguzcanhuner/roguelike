@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'require_all'
 gem 'rspec'
 gem 'dispel'
 gem 'pry'

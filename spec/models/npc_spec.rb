@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe NPC do
   let(:npc) { NPC.new }
 

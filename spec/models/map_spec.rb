@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Map do
   context 'given a 5 by 5 map' do
     let(:map) {Map.new(height: 5, width: 6)}

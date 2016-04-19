@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Coordinate do
   let(:coord) { Coordinate.new(6, 9) }
 
