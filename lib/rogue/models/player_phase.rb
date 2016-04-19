@@ -1,83 +1,80 @@
 class Phase
-  def initialize(game: Rogue.game)
+  def initialize(game: Rogue.game, last_action: nil)
     @game = game
     @player = game.player
     @map = game.map
+    @action = :move
+    @last_action = last_action
   end
+
+  attr_accessor :last_action
 
   def keys
     raise "Implement this"
   end
 
+  def directions
+    {
+        'h' => :left,
+        'j' => :down,
+        'k' => :up,
+        'l' => :right
+    }
+  end
+
   def perform(key)
-    if keys[key]
+    send_command(key)
+  end
+
+  def send_command(key)
+    if directions[key]
+      yield if block_given?
+      self.send(@action, directions[key])
+    elsif keys[key]
       self.send(*keys[key])
     else
       self
     end
   end
-
-  # most phases will stop the flow of the game (while an action is being taken)
-  def lock_movements?
-    true
-  end
 end
 
 class PlayerPhase < Phase
+  include MoveAction
+  include AttackAction
+
   def keys
-    {
-      'h' => [:move, :left],
-      'j' => [:move, :down],
-      'k' => [:move, :up],
-      'l' => [:move, :right],
-      'a' => [:start_attack]
-    }
+    {'a' => :start_attack}
   end
 
-  def lock_movements?
-    false
+  def perform(key)
+    send_command(key) do
+      target_cell = @map.cell(@player.coord.send(directions[key]))
+      @action = :attack if target_cell.attackable?
+    end
   end
 
   private
 
-  def move(direction)
-    target_cell = @map.cell(@player.coord.send(direction))
-    @game.add_message("Player moved #{ direction.to_s}")
-    @player.move(direction: direction)
-
-    self
-  end
-
   def start_attack
-    AttackPhase.new
+    AttackPhase.new({last_action: __method__})
   end
 end
 
 class AttackPhase < Phase
+  include AttackAction
+
+  def initialize(game: Rogue.game, last_action: nil)
+    super
+    @action = :attack
+  end
+
   def keys
-    {
-      'h' => [:attack, :left],
-      'j' => [:attack, :down],
-      'k' => [:attack, :up],
-      'l' => [:attack, :right],
-      'q' => [:cancel]
-    }
+    {'q' => :cancel}
   end
 
-  def attack(direction)
-    target_cell = @map.cell(@player.coord.send(direction))
-    if target_cell.attackable?
-      @game.add_message("Player attacked #{ target_cell.content.class }")
-      @player.attack(target_cell.content)
-    else
-      @game.add_message("Player attacked thin air")
-    end
-
-    PlayerPhase.new
-  end
+  private
 
   def cancel
-    PlayerPhase.new
+    PlayerPhase.new({last_action: __method__})
   end
 end
-
