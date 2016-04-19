@@ -35,20 +35,21 @@ describe Coordinate do
     end
   end
   describe '#down' do
-    it 'returns a coordinate above the current coordinate' do
+    it 'returns a coordinate below the current coordinate' do
       expect(coord.down).to eql Coordinate.new(6, 10)
     end
   end
   describe '#left' do
-    it 'returns a coordinate above the current coordinate' do
+    it 'returns a coordinate left of the current coordinate' do
       expect(coord.left).to eql Coordinate.new(5, 9)
     end
   end
   describe '#right' do
-    it 'returns a coordinate above the current coordinate' do
+    it 'returns a coordinate right of the current coordinate' do
       expect(coord.right).to eql Coordinate.new(7, 9)
     end
   end
+
   describe '#adjacent?' do
     it 'returns true when coordinates are next to each other' do
       expect(Coordinate.new(1, 3)).to be_adjacent(Coordinate.new(1,4))
@@ -64,6 +65,31 @@ describe Coordinate do
       expect(Coordinate.new(1, 3)).not_to be_adjacent(Coordinate.new(0,4))
       expect(Coordinate.new(1, 3)).not_to be_adjacent(Coordinate.new(2,2))
       expect(Coordinate.new(1, 3)).not_to be_adjacent(Coordinate.new(2,4))
+    end
+  end
+  
+  describe '#above?' do
+    it 'returns whether a coordinate is above another coordinate' do
+      expect(coord).to be_above(Coordinate.new(1,10))
+      expect(coord).not_to be_above(Coordinate.new(10,1))
+    end
+  end
+  describe '#below?' do
+    it 'returns whether a coordinate is below another coordinate' do
+      expect(coord).to be_below(Coordinate.new(10,1))
+      expect(coord).not_to be_below(Coordinate.new(1,10))
+    end
+  end
+  describe '#right_of?' do
+    it 'returns whether a coordinate is right of another coordinate' do
+      expect(coord).to be_right_of(Coordinate.new(1,10))
+      expect(coord).not_to be_right_of(Coordinate.new(10,1))
+    end
+  end
+  describe '#left_of?' do
+    it 'returns whether a coordinate is left of another coordinate' do
+      expect(coord).to be_left_of(Coordinate.new(10,1))
+      expect(coord).not_to be_left_of(Coordinate.new(1,10))
     end
   end
 end

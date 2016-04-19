@@ -9,13 +9,6 @@ class Coordinate
     object.x == x && object.y == y
   end
 
-  def adjacent?(coord)
-    [:up, :down, :left, :right].each do |direction|
-      return true if self.send(direction).eql?(coord)
-    end
-    false
-  end
-
   def hash
     [x, y].hash
   end
@@ -35,4 +28,25 @@ class Coordinate
   def right
     Coordinate.new(x+1, y)
   end
+
+  def adjacent?(coord)
+    [:up, :down, :left, :right].each do |direction|
+      return true if self.send(direction).eql?(coord)
+    end
+    false
+  end
+
+  def above?(coord)
+    self.y < coord.y
+  end
+  def below?(coord)
+    self.y > coord.y
+  end
+  def left_of?(coord)
+    self.x < coord.x
+  end
+  def right_of?(coord)
+    self.x > coord.x
+  end
+
 end
