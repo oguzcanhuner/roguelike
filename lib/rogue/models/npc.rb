@@ -2,10 +2,9 @@ class NPC
 
   def initialize
     @character = " D "
-    @max_health = 20
-    @max_attack = 5
+    @max_health = 10
+    @max_attack = 3
     @health = max_health
-    @alive = true
   end
 
   include Rogue::Mover

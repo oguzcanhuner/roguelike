@@ -43,6 +43,7 @@ class Map
   end
 
   private
+
   def initialize_cells
     collection = {}
 
@@ -52,7 +53,6 @@ class Map
         collection[coord] = Cell.new(coord)
       end
     end
-
     collection
   end
 end

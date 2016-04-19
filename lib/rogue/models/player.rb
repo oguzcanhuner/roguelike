@@ -6,7 +6,6 @@ class Player
     @max_health = 20
     @max_attack = 5
     @health = max_health
-    @alive = true
   end
 
   attr_reader :name

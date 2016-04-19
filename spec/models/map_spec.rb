@@ -3,7 +3,10 @@ describe Map do
     let(:map) {Map.new(height: 5, width: 6)}
     let(:empty_cell) { EmptyCell.new }
     let(:player) { Player.new }
+    let(:npc) { NPC.new}
     let(:coordinate) { Coordinate.new(1, 2) }
+
+    let(:helper) { Rogue::UiHelper.new(map: map, player: player) } #will help debugging tests
 
     describe '#cell' do
       it 'grants access to cells through coordinates' do

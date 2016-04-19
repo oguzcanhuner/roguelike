@@ -73,7 +73,6 @@ module Rogue
         boundaries[:y_lower_boundary] -= boundaries[:y_upper_boundary] - @map.height
         boundaries[:y_upper_boundary] = @map.height
       end
-
       boundaries
     end
   end
