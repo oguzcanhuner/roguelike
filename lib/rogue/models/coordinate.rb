@@ -35,4 +35,20 @@ class Coordinate
   def right
     Coordinate.new(x+1, y)
   end
+
+  def topleft
+    Coordinate.new(x-1, y-1)
+  end
+
+  def topright
+    Coordinate.new(x+1, y-1)
+  end
+
+  def bottomleft
+    Coordinate.new(x-1, y+1)
+  end
+
+  def bottomright
+    Coordinate.new(x+1, y+1)
+  end
 end
