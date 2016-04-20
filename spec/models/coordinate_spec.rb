@@ -49,6 +49,26 @@ describe Coordinate do
       expect(coord.right).to eql Coordinate.new(7, 9)
     end
   end
+  describe '#topleft' do
+    it 'returns a coordinate above the current coordinate' do
+      expect(coord.topleft).to eql Coordinate.new(5, 8)
+    end
+  end
+  describe '#topright' do
+    it 'returns a coordinate above the current coordinate' do
+      expect(coord.topright).to eql Coordinate.new(7, 8)
+    end
+  end
+  describe '#bottomleft' do
+    it 'returns a coordinate above the current coordinate' do
+      expect(coord.bottomleft).to eql Coordinate.new(5, 10)
+    end
+  end
+  describe '#bottomright' do
+    it 'returns a coordinate above the current coordinate' do
+      expect(coord.bottomright).to eql Coordinate.new(7, 10)
+    end
+  end
 
   describe '#adjacent?' do
     it 'returns true when coordinates are next to each other' do
