@@ -10,4 +10,10 @@ class NpcPhase < Phase
       end
     end
   end
+
+  private
+  def random_direction
+    [:left, :right, :up, :down, :topleft, 
+     :topright, :bottomleft, :bottomright].sample
+  end
 end
