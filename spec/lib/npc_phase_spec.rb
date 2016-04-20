@@ -33,9 +33,15 @@ describe NpcPhase do
       game.step('u')
     end
 
-    it 'should move NPCs towards the player if not already adjacent' do
-      map.move_object(from: npc.coord, to: Coordinate.new(2,2))
+    it 'should move NPCs towards the player in a straight line if not adjacent' do
+      map.move_object(from: npc.coord, to: Coordinate.new(5,1))
       expect(npc).to receive(:move).with(direction: :down)
+      game.step('k')
+    end
+
+    it 'should move NPCs towards the player diagonally if not adjacent' do
+      map.move_object(from: npc.coord, to: Coordinate.new(2,2))
+      expect(npc).to receive(:move).with(direction: :bottomright)
       game.step('k')
     end
   end

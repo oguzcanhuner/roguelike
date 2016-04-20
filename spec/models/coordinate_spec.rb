@@ -115,10 +115,14 @@ describe Coordinate do
 
   describe '#direction_to_chase' do
     it 'returns a direction that will move closer to another coordinate' do
-      expect(Coordinate.new(4, 7).direction_to_chase(coord)).to eq :down
-      expect(Coordinate.new(10, 11).direction_to_chase(coord)).to eq :up
+      expect(Coordinate.new(6, 7).direction_to_chase(coord)).to eq :down
+      expect(Coordinate.new(6, 11).direction_to_chase(coord)).to eq :up
       expect(Coordinate.new(3, 9).direction_to_chase(coord)).to eq :right
       expect(Coordinate.new(8, 9).direction_to_chase(coord)).to eq :left
+      expect(Coordinate.new(9, 15).direction_to_chase(coord)).to eq :topleft
+      expect(Coordinate.new(2, 15).direction_to_chase(coord)).to eq :topright
+      expect(Coordinate.new(9, 2).direction_to_chase(coord)).to eq :bottomleft
+      expect(Coordinate.new(2, 2).direction_to_chase(coord)).to eq :bottomright
     end
   end
 end
