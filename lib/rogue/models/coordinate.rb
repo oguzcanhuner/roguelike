@@ -87,7 +87,7 @@ class Coordinate
     right_of?(coord) && below?(coord)
   end
 
-  def direction_to_chase(coord)
+  def direction_to_follow(coord)
     [:topleft_of?, :topright_of?, :bottomleft_of?, :bottomright_of?, :above?, :below?, :left_of?, :right_of?].each do |relation|
       return CHASE_DIRECTIONS[relation] if self.send(relation, coord)
     end
