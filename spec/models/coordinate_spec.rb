@@ -80,11 +80,11 @@ describe Coordinate do
       expect(Coordinate.new(1, 3)).not_to be_adjacent(Coordinate.new(5, 3))
     end
 
-    it 'returns false when coordinates are diagonal' do
-      expect(Coordinate.new(1, 3)).not_to be_adjacent(Coordinate.new(0, 2))
-      expect(Coordinate.new(1, 3)).not_to be_adjacent(Coordinate.new(0, 4))
-      expect(Coordinate.new(1, 3)).not_to be_adjacent(Coordinate.new(2, 2))
-      expect(Coordinate.new(1, 3)).not_to be_adjacent(Coordinate.new(2, 4))
+    it 'returns true when coordinates are diagonal' do
+      expect(Coordinate.new(1, 3)).to be_adjacent(Coordinate.new(0, 2))
+      expect(Coordinate.new(1, 3)).to be_adjacent(Coordinate.new(0, 4))
+      expect(Coordinate.new(1, 3)).to be_adjacent(Coordinate.new(2, 2))
+      expect(Coordinate.new(1, 3)).to be_adjacent(Coordinate.new(2, 4))
     end
   end
 

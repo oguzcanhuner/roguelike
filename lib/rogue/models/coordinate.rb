@@ -32,7 +32,7 @@ class Coordinate
   end
 
   def adjacent?(coord)
-    [:up, :down, :left, :right].each do |direction|
+    [:up, :down, :left, :right, :topleft, :topright, :bottomleft, :bottomright].each do |direction|
       return true if self.send(direction).eql?(coord)
     end
     false
@@ -60,7 +60,7 @@ class Coordinate
     end
     false
   end
-  
+
   def topleft
     Coordinate.new(x-1, y-1)
   end

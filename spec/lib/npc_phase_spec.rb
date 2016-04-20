@@ -27,6 +27,12 @@ describe NpcPhase do
       game.step('j')
     end
 
+    it 'should make NPCS attack the player when diagonal' do
+      map.move_object(from: npc.coord, to: Coordinate.new(4,4))
+      expect(npc).to receive(:attack)
+      game.step('u')
+    end
+
     it 'should move NPCs towards the player if not already adjacent' do
       map.move_object(from: npc.coord, to: Coordinate.new(2,2))
       expect(npc).to receive(:move).with(direction: :down)
