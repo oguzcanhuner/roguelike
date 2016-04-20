@@ -41,6 +41,26 @@ describe Rogue::Game do
         expect(player).to receive(:move).with({direction: :up})
         game.step('k')
       end
+
+      it 'moves the player diagonally to the topleft' do
+        expect(player).to receive(:move).with({direction: :topleft})
+        game.step('u')
+      end
+
+      it 'moves the player diagonally to the topright' do
+        expect(player).to receive(:move).with({direction: :topright})
+        game.step('i')
+      end
+
+      it 'moves the player diagonally to the bottomleft' do
+        expect(player).to receive(:move).with({direction: :bottomleft})
+        game.step('n')
+      end
+
+      it 'moves the player diagonally to the bottomright' do
+        expect(player).to receive(:move).with({direction: :bottomright})
+        game.step('m')
+      end
     end
 
     context 'attacking' do

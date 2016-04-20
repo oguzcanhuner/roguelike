@@ -16,10 +16,14 @@ class Phase
 
   def directions
     {
-        'h' => :left,
-        'j' => :down,
-        'k' => :up,
-        'l' => :right
+      'h' => :left,
+      'j' => :down,
+      'k' => :up,
+      'l' => :right,
+      'u' => :topleft,
+      'i' => :topright,
+      'n' => :bottomleft,
+      'm' => :bottomright
     }
   end
 

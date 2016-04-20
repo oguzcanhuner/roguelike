@@ -47,6 +47,3 @@ DEPENDENCIES
   pry
   require_all
   rspec
-
-BUNDLED WITH
-   1.11.2
