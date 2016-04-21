@@ -6,7 +6,7 @@ class NpcPhase < Phase
         @game.add_message("#{npc.class} attacked Player")
         npc.attack(@player)
       else
-        npc.move(direction: random_direction )
+        npc.move(direction: npc.coord.direction_to_follow(@player.coord))
       end
     end
   end
