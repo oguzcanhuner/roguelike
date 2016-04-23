@@ -6,23 +6,19 @@ class Coordinate
   attr_reader :x, :y
 
   DIRECTIONS = [:left, :topleft, :up, :topright, :right, :bottomright, :down, :bottomleft]
-  DIRECTIONS_DIAGONALS_FIRST = DIRECTIONS.partition {|dir| DIRECTIONS.index(dir).odd?}.flatten
+  DIRECTIONS_DIAGONALS_FIRST = DIRECTIONS.partition { |dir| DIRECTIONS.index(dir).odd? }.flatten
 
   ROTATE_PATTERN = [-1, -1, 0, +1, +1, +1, 0, -1]
   X_ROTATION = ROTATE_PATTERN
   Y_ROTATION = X_ROTATION.rotate(-2)
 
-  def eql?(object)
-    object.x == x && object.y == y
-  end
-
-  def hash
-    [x, y].hash
-  end
-
-  def method_missing(direction)
-    rotation_index = DIRECTIONS.index(direction)
-    Coordinate.new((x + X_ROTATION[rotation_index]), (y + Y_ROTATION[rotation_index]))
+  def method_missing(direction, *args)
+    if DIRECTIONS.include?(direction)
+      rotation_index = DIRECTIONS.index(direction)
+      Coordinate.new((x + X_ROTATION[rotation_index]), (y + Y_ROTATION[rotation_index]))
+    elsif DIRECTIONS.include?(unquery(direction))
+      check_in_direction(direction, args[0])
+    end
   end
 
   def adjacent?(coord)
@@ -32,38 +28,6 @@ class Coordinate
     false
   end
 
-  def up?(coord)
-    self.y < coord.y
-  end
-
-  def down?(coord)
-    self.y > coord.y
-  end
-
-  def left?(coord)
-    self.x < coord.x
-  end
-
-  def right?(coord)
-    self.x > coord.x
-  end
-
-  def topleft?(coord)
-    left?(coord) && up?(coord)
-  end
-
-  def topright?(coord)
-    right?(coord) && up?(coord)
-  end
-
-  def bottomleft?(coord)
-    left?(coord) && down?(coord)
-  end
-
-  def bottomright?(coord)
-    right?(coord) && down?(coord)
-  end
-
   def direction_to_follow(coord)
     DIRECTIONS_DIAGONALS_FIRST.each do |direction|
       return DIRECTIONS[DIRECTIONS.index(direction)-4] if self.send(query(direction), coord)
@@ -71,10 +35,46 @@ class Coordinate
     false
   end
 
+  def eql?(object)
+    object.x == x && object.y == y
+  end
+
+  def hash
+    [x, y].hash
+  end
+
+  def respond_to?(method, *args)
+    return true if DIRECTIONS.include?(method) || DIRECTIONS.include?(unquery(method))
+    super
+  end
+
   private
 
+  def check_in_direction(direction, coord)
+    rotation_mappings = {:x => X_ROTATION, :y => Y_ROTATION}
+    evals = []
+    rotation_mappings.each do |axis, rotation|
+      index = DIRECTIONS.index(unquery(direction))
+      compare_string = "self.#{axis} ? coord.#{axis}"
+      if rotation[index] > 0
+        evals << compare_string.gsub('?', '>')
+      elsif rotation[index] < 0
+        evals << compare_string.gsub('?', '<')
+      end
+    end
+    eval(evals.join(' && '))
+  end
+
   def query(symbol)
-    (symbol.to_s << '?').to_sym
+    resymbol(symbol) { |sym| sym << '?' }
+  end
+
+  def unquery(symbol)
+    resymbol(symbol) { |sym| sym.chop! }
+  end
+
+  def resymbol(sym)
+    yield(sym.to_s).to_sym
   end
 
 end
