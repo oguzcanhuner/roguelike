@@ -12,8 +12,8 @@ class NpcPhase < Phase
   end
 
   private
+
   def random_direction
-    [:left, :right, :up, :down, :topleft, 
-     :topright, :bottomleft, :bottomright].sample
+    Coordinate::DIRECTIONS.sample
   end
 end

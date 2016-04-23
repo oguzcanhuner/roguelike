@@ -14,7 +14,7 @@ class Cell
   end
 
   def passable?
-    !content.solid?
+    true unless content.solid?
   end
 
   def wall?
