@@ -88,28 +88,28 @@ describe Coordinate do
     end
   end
 
-  describe '#above?' do
+  describe '#up?' do
     it 'returns whether a coordinate is above another coordinate' do
-      expect(coord).to be_above(Coordinate.new(1, 10))
-      expect(coord).not_to be_above(Coordinate.new(10, 1))
+      expect(coord).to be_up(Coordinate.new(1, 10))
+      expect(coord).not_to be_up(Coordinate.new(10, 1))
     end
   end
-  describe '#below?' do
+  describe '#down?' do
     it 'returns whether a coordinate is below another coordinate' do
-      expect(coord).to be_below(Coordinate.new(10, 1))
-      expect(coord).not_to be_below(Coordinate.new(1, 10))
+      expect(coord).to be_down(Coordinate.new(10, 1))
+      expect(coord).not_to be_down(Coordinate.new(1, 10))
     end
   end
-  describe '#right_of?' do
+  describe '#right?' do
     it 'returns whether a coordinate is right of another coordinate' do
-      expect(coord).to be_right_of(Coordinate.new(1, 10))
-      expect(coord).not_to be_right_of(Coordinate.new(10, 1))
+      expect(coord).to be_right(Coordinate.new(1, 10))
+      expect(coord).not_to be_right(Coordinate.new(10, 1))
     end
   end
-  describe '#left_of?' do
+  describe '#left?' do
     it 'returns whether a coordinate is left of another coordinate' do
-      expect(coord).to be_left_of(Coordinate.new(10, 1))
-      expect(coord).not_to be_left_of(Coordinate.new(1, 10))
+      expect(coord).to be_left(Coordinate.new(10, 1))
+      expect(coord).not_to be_left(Coordinate.new(1, 10))
     end
   end
 

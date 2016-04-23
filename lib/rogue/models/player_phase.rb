@@ -10,31 +10,21 @@ class Phase
 
   attr_accessor :last_action
 
+  DIRECTION_KEYS = [:h, :u, :k, :i, :l, :m, :j, :n]
+  DIRECTION_KEYMAP = DIRECTION_KEYS.zip(Coordinate::DIRECTIONS).to_h
+
   def keys
     raise "Implement this"
   end
 
-  def directions
-    {
-      'h' => :left,
-      'j' => :down,
-      'k' => :up,
-      'l' => :right,
-      'u' => :topleft,
-      'i' => :topright,
-      'n' => :bottomleft,
-      'm' => :bottomright
-    }
-  end
-
   def perform(key)
-    send_command(key)
+    send_command(key.to_sym)
   end
 
   def send_command(key)
-    if directions[key]
+    if DIRECTION_KEYMAP[key]
       yield if block_given?
-      self.send(@action, directions[key])
+      self.send(@action, DIRECTION_KEYMAP[key])
     elsif keys[key]
       self.send(*keys[key])
     else
@@ -52,8 +42,8 @@ class PlayerPhase < Phase
   end
 
   def perform(key)
-    send_command(key) do
-      target_cell = @map.cell(@player.coord.send(directions[key]))
+    send_command(key.to_sym) do
+      target_cell = @map.cell(@player.coord.send(DIRECTION_KEYMAP[key.to_sym]))
       @action = :attack if target_cell.attackable?
     end
   end

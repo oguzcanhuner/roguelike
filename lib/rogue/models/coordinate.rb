@@ -5,8 +5,8 @@ class Coordinate
 
   attr_reader :x, :y
 
-  CHASE_DIRECTIONS = {:above? => :down, :below? => :up, :left_of? => :right, :right_of? => :left, \
-  :topleft_of? => :bottomright, :topright_of? => :bottomleft, :bottomright_of? => :topleft, :bottomleft_of? => :topright}
+  DIRECTIONS = [:left, :topleft, :up, :topright, :right, :bottomright, :down, :bottomleft]
+  DIAGONALS_FIRST = DIRECTIONS.partition {|dir| DIRECTIONS.index(dir).odd?}.flatten
 
   def eql?(object)
     object.x == x && object.y == y
@@ -49,50 +49,55 @@ class Coordinate
   end
 
   def adjacent?(coord)
-    [:up, :down, :left, :right, :topleft, :topright, :bottomleft, :bottomright].each do |direction|
+    DIRECTIONS.each do |direction|
       return true if self.send(direction).eql?(coord)
     end
     false
   end
 
-  def above?(coord)
+  def up?(coord)
     self.y < coord.y
   end
 
-  def below?(coord)
+  def down?(coord)
     self.y > coord.y
   end
 
-  def left_of?(coord)
+  def left?(coord)
     self.x < coord.x
   end
 
-  def right_of?(coord)
+  def right?(coord)
     self.x > coord.x
   end
 
-  def topleft_of?(coord)
-    left_of?(coord) && above?(coord)
+  def topleft?(coord)
+    left?(coord) && up?(coord)
   end
 
-  def topright_of?(coord)
-    right_of?(coord) && above?(coord)
+  def topright?(coord)
+    right?(coord) && up?(coord)
   end
 
-  def bottomleft_of?(coord)
-    left_of?(coord) && below?(coord)
+  def bottomleft?(coord)
+    left?(coord) && down?(coord)
   end
 
-  def bottomright_of?(coord)
-    right_of?(coord) && below?(coord)
+  def bottomright?(coord)
+    right?(coord) && down?(coord)
   end
 
   def direction_to_follow(coord)
-    [:topleft_of?, :topright_of?, :bottomleft_of?, :bottomright_of?, :above?, :below?, :left_of?, :right_of?].each do |relation|
-      return CHASE_DIRECTIONS[relation] if self.send(relation, coord)
+    DIAGONALS_FIRST.each do |direction|
+      return DIRECTIONS[DIRECTIONS.index(direction)-4] if self.send(query(direction), coord)
     end
     false
   end
 
+  private
+
+  def query(symbol)
+    (symbol.to_s << '?').to_sym
+  end
 
 end
