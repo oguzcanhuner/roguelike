@@ -6,7 +6,11 @@ class Coordinate
   attr_reader :x, :y
 
   DIRECTIONS = [:left, :topleft, :up, :topright, :right, :bottomright, :down, :bottomleft]
-  DIAGONALS_FIRST = DIRECTIONS.partition {|dir| DIRECTIONS.index(dir).odd?}.flatten
+  DIRECTIONS_DIAGONALS_FIRST = DIRECTIONS.partition {|dir| DIRECTIONS.index(dir).odd?}.flatten
+
+  ROTATE_PATTERN = [-1, -1, 0, +1, +1, +1, 0, -1]
+  X_ROTATION = ROTATE_PATTERN
+  Y_ROTATION = X_ROTATION.rotate(-2)
 
   def eql?(object)
     object.x == x && object.y == y
@@ -16,36 +20,9 @@ class Coordinate
     [x, y].hash
   end
 
-  def up
-    Coordinate.new(x, y-1)
-  end
-
-  def down
-    Coordinate.new(x, y+1)
-  end
-
-  def left
-    Coordinate.new(x-1, y)
-  end
-
-  def right
-    Coordinate.new(x+1, y)
-  end
-
-  def topleft
-    Coordinate.new(x-1, y-1)
-  end
-
-  def topright
-    Coordinate.new(x+1, y-1)
-  end
-
-  def bottomleft
-    Coordinate.new(x-1, y+1)
-  end
-
-  def bottomright
-    Coordinate.new(x+1, y+1)
+  def method_missing(direction)
+    rotation_index = DIRECTIONS.index(direction)
+    Coordinate.new((x + X_ROTATION[rotation_index]), (y + Y_ROTATION[rotation_index]))
   end
 
   def adjacent?(coord)
@@ -88,7 +65,7 @@ class Coordinate
   end
 
   def direction_to_follow(coord)
-    DIAGONALS_FIRST.each do |direction|
+    DIRECTIONS_DIAGONALS_FIRST.each do |direction|
       return DIRECTIONS[DIRECTIONS.index(direction)-4] if self.send(query(direction), coord)
     end
     false
