@@ -17,7 +17,7 @@ class Coordinate
       rotation_index = DIRECTIONS.index(direction)
       Coordinate.new((x + X_ROTATION[rotation_index]), (y + Y_ROTATION[rotation_index]))
     elsif DIRECTIONS.include?(unquery(direction))
-      check_in_direction(direction, args[0])
+      check_in_direction(unquery(direction), args[0])
     end
   end
 
@@ -54,13 +54,10 @@ class Coordinate
     rotation_mappings = {:x => X_ROTATION, :y => Y_ROTATION}
     evals = []
     rotation_mappings.each do |axis, rotation|
-      index = DIRECTIONS.index(unquery(direction))
+      index = DIRECTIONS.index(direction)
       compare_string = "self.#{axis} ? coord.#{axis}"
-      if rotation[index] > 0
-        evals << compare_string.gsub('?', '>')
-      elsif rotation[index] < 0
-        evals << compare_string.gsub('?', '<')
-      end
+      evals << compare_string.gsub('?', '>') if rotation[index] > 0
+      evals << compare_string.gsub('?', '<') if rotation[index] < 0
     end
     eval(evals.join(' && '))
   end
@@ -76,5 +73,4 @@ class Coordinate
   def resymbol(sym)
     yield(sym.to_s).to_sym
   end
-
 end
