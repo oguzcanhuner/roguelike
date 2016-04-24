@@ -21,7 +21,7 @@ module Rogue
     end
 
     def over?
-      !@player.alive?
+      true unless @player.alive?
     end
 
     private

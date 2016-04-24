@@ -5,8 +5,35 @@ class Coordinate
 
   attr_reader :x, :y
 
-  CHASE_DIRECTIONS = {:above? => :down, :below? => :up, :left_of? => :right, :right_of? => :left, \
-  :topleft_of? => :bottomright, :topright_of? => :bottomleft, :bottomright_of? => :topleft, :bottomleft_of? => :topright}
+  DIRECTIONS = [:left, :topleft, :up, :topright, :right, :bottomright, :down, :bottomleft]
+  DIRECTIONS_DIAGONALS_FIRST = DIRECTIONS.partition { |dir| DIRECTIONS.index(dir).odd? }.flatten
+
+  ROTATE_PATTERN = [-1, -1, 0, +1, +1, +1, 0, -1]
+  X_ROTATION = ROTATE_PATTERN
+  Y_ROTATION = X_ROTATION.rotate(-2)
+
+  def method_missing(direction, *args)
+    if DIRECTIONS.include?(direction)
+      rotation_index = DIRECTIONS.index(direction)
+      Coordinate.new((x + X_ROTATION[rotation_index]), (y + Y_ROTATION[rotation_index]))
+    elsif DIRECTIONS.include?(unquery(direction))
+      check_in_direction(unquery(direction), args[0])
+    end
+  end
+
+  def adjacent?(coord)
+    DIRECTIONS.each do |direction|
+      return true if self.send(direction).eql?(coord)
+    end
+    false
+  end
+
+  def direction_to_follow(coord)
+    DIRECTIONS_DIAGONALS_FIRST.each do |direction|
+      return DIRECTIONS[DIRECTIONS.index(direction)-4] if self.send(query(direction), coord)
+    end
+    false
+  end
 
   def eql?(object)
     object.x == x && object.y == y
@@ -16,83 +43,34 @@ class Coordinate
     [x, y].hash
   end
 
-  def up
-    Coordinate.new(x, y-1)
+  def respond_to?(method, *args)
+    return true if DIRECTIONS.include?(method) || DIRECTIONS.include?(unquery(method))
+    super
   end
 
-  def down
-    Coordinate.new(x, y+1)
-  end
+  private
 
-  def left
-    Coordinate.new(x-1, y)
-  end
-
-  def right
-    Coordinate.new(x+1, y)
-  end
-
-  def topleft
-    Coordinate.new(x-1, y-1)
-  end
-
-  def topright
-    Coordinate.new(x+1, y-1)
-  end
-
-  def bottomleft
-    Coordinate.new(x-1, y+1)
-  end
-
-  def bottomright
-    Coordinate.new(x+1, y+1)
-  end
-
-  def adjacent?(coord)
-    [:up, :down, :left, :right, :topleft, :topright, :bottomleft, :bottomright].each do |direction|
-      return true if self.send(direction).eql?(coord)
+  def check_in_direction(direction, coord)
+    rotation_mappings = {:x => X_ROTATION, :y => Y_ROTATION}
+    evals = []
+    rotation_mappings.each do |axis, rotation|
+      index = DIRECTIONS.index(direction)
+      compare_string = "self.#{axis} ? coord.#{axis}"
+      evals << compare_string.gsub('?', '>') if rotation[index] > 0
+      evals << compare_string.gsub('?', '<') if rotation[index] < 0
     end
-    false
+    eval(evals.join(' && '))
   end
 
-  def above?(coord)
-    self.y < coord.y
+  def query(symbol)
+    resymbol(symbol) { |sym| sym << '?' }
   end
 
-  def below?(coord)
-    self.y > coord.y
+  def unquery(symbol)
+    resymbol(symbol) { |sym| sym.chop! }
   end
 
-  def left_of?(coord)
-    self.x < coord.x
+  def resymbol(sym)
+    yield(sym.to_s).to_sym
   end
-
-  def right_of?(coord)
-    self.x > coord.x
-  end
-
-  def topleft_of?(coord)
-    left_of?(coord) && above?(coord)
-  end
-
-  def topright_of?(coord)
-    right_of?(coord) && above?(coord)
-  end
-
-  def bottomleft_of?(coord)
-    left_of?(coord) && below?(coord)
-  end
-
-  def bottomright_of?(coord)
-    right_of?(coord) && below?(coord)
-  end
-
-  def direction_to_follow(coord)
-    [:topleft_of?, :topright_of?, :bottomleft_of?, :bottomright_of?, :above?, :below?, :left_of?, :right_of?].each do |relation|
-      return CHASE_DIRECTIONS[relation] if self.send(relation, coord)
-    end
-    false
-  end
-
-
 end
