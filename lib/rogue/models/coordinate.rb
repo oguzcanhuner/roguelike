@@ -5,16 +5,7 @@ class Coordinate
 
   attr_reader :x, :y
 
-  CHASE_DIRECTIONS = {:above? => :down, :below? => :up, :left_of? => :right, :right_of? => :left, \
-  :topleft_of? => :bottomright, :topright_of? => :bottomleft, :bottomright_of? => :topleft, :bottomleft_of? => :topright}
-
-  def eql?(object)
-    object.x == x && object.y == y
-  end
-
-  def hash
-    [x, y].hash
-  end
+  DIRECTIONS = [:left, :topleft, :up, :topright, :right, :bottomright, :down, :bottomleft]
 
   def up
     Coordinate.new(x, y-1)
@@ -49,7 +40,7 @@ class Coordinate
   end
 
   def adjacent?(coord)
-    [:up, :down, :left, :right, :topleft, :topright, :bottomleft, :bottomright].each do |direction|
+    DIRECTIONS.each do |direction|
       return true if self.send(direction).eql?(coord)
     end
     false
@@ -87,12 +78,11 @@ class Coordinate
     right_of?(coord) && below?(coord)
   end
 
-  def direction_to_follow(coord)
-    [:topleft_of?, :topright_of?, :bottomleft_of?, :bottomright_of?, :above?, :below?, :left_of?, :right_of?].each do |relation|
-      return CHASE_DIRECTIONS[relation] if self.send(relation, coord)
-    end
-    false
+  def eql?(object)
+    object.x == x && object.y == y
   end
 
-
+  def hash
+    [x, y].hash
+  end
 end
