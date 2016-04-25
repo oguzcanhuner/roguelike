@@ -7,6 +7,7 @@ module Rogue
       @map = map
       @player = player
       @messages = messages
+      @vision_helper = VisionHelper.new(@map)
     end
 
     def draw
@@ -23,9 +24,15 @@ module Rogue
       string = ""
       area = area_around_player
 
+      empty_cell = 
       (area[:y_lower_boundary]..area[:y_upper_boundary]).step  do |y|
         (area[:x_lower_boundary]..area[:x_upper_boundary]).step do |x|
-          string << (@map.cell(Coordinate.new(x, y)) || NullCell.new).to_s
+          cell = @map.cell(Coordinate.new(x, y)) || NullCell.new
+          if cell.wall? || @vision_helper.clear_path_between?(source: @player, target: cell) 
+            string << cell.to_s
+          else
+            string << "   "
+          end
         end
         string << "\n"
       end 

@@ -14,4 +14,8 @@ class NullCell
   def attackable?
     false
   end
+
+  def coord
+    Coordinate.new(-1, -1)
+  end
 end
