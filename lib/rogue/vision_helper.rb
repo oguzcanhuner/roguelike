@@ -5,7 +5,7 @@ module Rogue
     end
 
     # Check to see if the source can see the target
-    def can_see?(source:, target:)
+    def clear_path_between?(source:, target:)
       # walk along a line between the source and target
       x1, y1 = source.coord.x.to_f, source.coord.y.to_f
       x2, y2 = target.coord.x.to_f, target.coord.y.to_f
