@@ -6,7 +6,10 @@ class NpcPhase < Phase
         @game.add_message("#{npc.class} attacked Player")
         npc.attack(@player)
       else
-        npc.move(direction: AI.follow_direction(npc.coord, @player.coord))
+        helper = Rogue::VisionHelper.new
+        if helper.clear_path_between?(source: npc, target: @player)
+          npc.move(direction: AI.follow_direction(npc.coord, @player.coord))
+        end
       end
     end
   end

@@ -1,6 +1,6 @@
 module Rogue
   class VisionHelper
-    def initialize(map)
+    def initialize(map=Rogue.map)
       @map = map
     end
 
