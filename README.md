@@ -24,6 +24,11 @@ Movement:
  - Up: j
  - Down: k
  - Right: l
+ - Topleft: u
+ - Topright: i
+ - Bottomleft: n
+ - Bottomright: m
+
  - Attack phase: a
  - Cancel attack: q
  - Exit game: Ctrl C
