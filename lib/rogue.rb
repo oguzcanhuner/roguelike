@@ -4,7 +4,7 @@ require_all 'lib'
 module Rogue
   class << self
     def initialize
-      @map = Map.new(height: 30, width: 40)
+      @map = Map.new(height: 100, width: 150)
       map_generator = MapGenerator.new(map: @map)
       map_generator.generate_cave
 
