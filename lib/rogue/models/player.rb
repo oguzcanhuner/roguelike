@@ -3,7 +3,7 @@ class Player
   def initialize
     @name = "Oz"
     @character = " @ "
-    @max_health = 10000
+    @max_health = 20
     @max_attack = 5
     @health = max_health
   end
