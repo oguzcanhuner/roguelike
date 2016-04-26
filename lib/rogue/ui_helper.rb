@@ -27,7 +27,9 @@ module Rogue
       (area[:y_lower_boundary]..area[:y_upper_boundary]).step  do |y|
         (area[:x_lower_boundary]..area[:x_upper_boundary]).step do |x|
           cell = @map.cell(Coordinate.new(x, y)) || NullCell.new
-          if cell.wall? || VisionHelper.clear_path_between?(map: @map, source: @player, target: cell) 
+          if cell.wall? && cell.discovered?
+            string << cell.to_s
+          elsif @player.can_see?(cell)
             string << cell.to_s
           else
             string << "   "

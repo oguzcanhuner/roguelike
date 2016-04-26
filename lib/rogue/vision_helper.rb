@@ -1,5 +1,8 @@
 module Rogue
   class VisionHelper
+    def initialize(map=Rogue.map)
+      @map = map
+    end
 
     # Check to see if the source can see the target
     def self.clear_path_between?(map:, source:, target:)

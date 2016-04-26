@@ -4,10 +4,11 @@ class Cell
     @x = coord.x
     @y = coord.y
     @content = content
+    @discovered = false
   end
   
   attr_reader :coord, :x, :y, :content
-  attr_accessor :content
+  attr_accessor :content, :discovered
 
   def to_s
     content.to_s
@@ -27,5 +28,13 @@ class Cell
 
   def attackable?
     content.attackable?
+  end
+
+  def discovered?
+    @discovered
+  end
+
+  def discover!
+    @discovered = true
   end
 end

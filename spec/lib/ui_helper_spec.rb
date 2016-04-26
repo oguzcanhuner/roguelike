@@ -9,6 +9,10 @@ describe Rogue::UiHelper do
       let(:game) { Rogue::Game.new(map: map) }
       let(:player) { game.player }
 
+      before do
+        Rogue.map = map
+      end
+
       let!(:helper) { Rogue::UiHelper.new(map: map, player: player) }
       
       it 'outputs a map as a string' do

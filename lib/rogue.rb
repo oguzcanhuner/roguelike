@@ -10,6 +10,7 @@ module Rogue
 
       @game = Game.new(map: map)
     end
-    attr_reader :map, :game
+    attr_reader :game
+    attr_accessor :map
   end
 end
