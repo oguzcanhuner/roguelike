@@ -19,12 +19,12 @@ class Player
   end
 
   def can_see?(cell)
-    vision_helper = Rogue::VisionHelper.new
+    vision_helper = Rogue::VisionHelper
     low_x, upper_x = (self.coord.x - vision), (self.coord.x + vision)
     low_y, upper_y = (self.coord.y - vision), (self.coord.y + vision)
 
     cell_visible = cell.x.between?(low_x, upper_x) && cell.y.between?(low_y, upper_y)
-    path_clear = vision_helper.clear_path_between?(source: self, target: cell) 
+    path_clear = vision_helper.clear_path_between?(map: Rogue.map, source: self, target: cell) 
 
     if cell_visible && path_clear
       cell.discover!
