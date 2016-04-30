@@ -1,11 +1,8 @@
 module Rogue
   class VisionHelper
-    def initialize(map)
-      @map = map
-    end
 
     # Check to see if the source can see the target
-    def clear_path_between?(source:, target:)
+    def self.clear_path_between?(map:, source:, target:)
       # walk along a line between the source and target
       x1, y1 = source.coord.x.to_f, source.coord.y.to_f
       x2, y2 = target.coord.x.to_f, target.coord.y.to_f
@@ -30,7 +27,7 @@ module Rogue
         y1 = y_move + y1
 
         # Find the cell at the new coordinate and determine if its a wall or not
-        cell = @map.cell(Coordinate.new(x1.round, y1.round))
+        cell = map.cell(Coordinate.new(x1.round, y1.round))
         return false if cell.wall?
 
         # Set the new delta values based on the current coordinate
