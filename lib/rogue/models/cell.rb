@@ -5,7 +5,7 @@ class Cell
     @y = coord.y
     @content = content
   end
-  
+
   attr_reader :coord, :x, :y, :content
   attr_accessor :content
 

@@ -13,12 +13,20 @@ module Rogue
     end
 
     def attack(target)
-      target.take_damage!(max_attack)
+      return MissInfo.new(target)  if !target.attackable?
+      return DodgeInfo.new(target) if target.dodge?
+
+      HitInfo.new(target, target.take_damage!(max_attack))
     end
 
     def take_damage!(damage)
       self.health -= damage
       die unless alive?
+      damage
+    end
+
+    def dodge?
+      rand <= dodge_probability
     end
 
     private
